@@ -1,13 +1,19 @@
 package model;
 
-public class island {
+public class island extends Observable{
     private zone[][] grid;
 
-    public island(int width, int height){
-        this.grid = new zone[width][height];
-        for(int i=0; i<width; i++){
-            for(int j=0; j<height; j++){
-                this.grid[i][j] = new zone(5,5);
+    public static final int HAUTEUR=40, LARGEUR=60;
+
+    public island(){
+        this.grid = new zone[LARGEUR][HAUTEUR];
+        for(int i=0; i<LARGEUR; i++){
+            for(int j=0; j<HAUTEUR; j++){
+                this.grid[i][j] = new zone();
+
+                if(j % 2 == 0){
+                    this.grid[i][j].setState(ZoneState.FLOODED);
+                }
             }
         }
     }
@@ -20,14 +26,17 @@ public class island {
         }
     }
 
+    public zone[][] getGrid() {
+        return grid;
+    }
 
-
-
-
+    public void setGrid(zone[][] grid) {
+        this.grid = grid;
+    }
 
     public static void main(String[] args) {
         // Create a new zone (e.g., 5x5)
-        zone z = new zone(20, 20);
+        zone z = new zone();
         System.out.println(z);  // Should print: Zone (5x5) - State: NORMAL
 
         // Change the state to FLOODED
@@ -35,7 +44,7 @@ public class island {
         System.out.println(z);  // Now it should print: Zone (5x5) - State: FLOODED
 
 
-        island island = new island(20, 20);
+        island island = new island();
 
         // Print the initial state of the island (all zones should be NORMAL)
         island.printIsland();
