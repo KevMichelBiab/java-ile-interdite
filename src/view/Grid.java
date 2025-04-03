@@ -14,7 +14,7 @@ public class Grid extends JPanel implements Observer{
         this.plateau = plateau;
         this.plateau.addObserver(this);
 
-        Dimension dim = new Dimension(400,400);
+        Dimension dim = new Dimension(100,400);
         this.setPreferredSize(dim);
     }
 
@@ -43,8 +43,7 @@ public class Grid extends JPanel implements Observer{
             g.setColor(Color.BLACK);
         }
         g.fillRect(x*TAILLE,y*TAILLE,c.getWidth(), c.getHeight());
-        System.out.println(getWidth());
-        System.out.println(getHeight());
+
     }
 
 }
