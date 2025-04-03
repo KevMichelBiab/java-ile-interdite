@@ -11,11 +11,9 @@ public class island extends Observable{
             for(int j=0; j<HAUTEUR; j++){
                 this.grid[i][j] = new zone();
 
-                if(j % 2 == 0){
-                    this.grid[i][j].setState(ZoneState.FLOODED);
-                }
             }
         }
+        this.init();
     }
     public void printIsland() {
         for (int i = 0; i < grid.length; i++) {
@@ -23,6 +21,21 @@ public class island extends Observable{
                 System.out.print(grid[i][j].toString() + " ");  // Print each zone's state
             }
             System.out.println();  // New line after each row
+        }
+
+        notifyObservers();
+    }
+
+    public void init() {
+        for(int i=0; i<LARGEUR; i++) {
+            for(int j=0; j<HAUTEUR; j++) {
+                if (Math.random() < .2) {
+                    this.grid[i][j].setState(ZoneState.FLOODED);
+                }
+                if (Math.random() < .3){
+                    this.grid[i][j].setState(ZoneState.SUNK);
+                }
+            }
         }
     }
 

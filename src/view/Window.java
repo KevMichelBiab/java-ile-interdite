@@ -12,11 +12,15 @@ public class Window  {
     protected Window(island plateau){
         this.frame = new JFrame("ILE INTERDITE");
         this.frame.setSize(600,400);
-        this.frame.setLayout(new FlowLayout(FlowLayout.LEFT));
+        this.frame.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
         this.grid = new Grid(plateau);
 
         this.frame.add(this.grid);
+        this.frame.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        this.buttons = new Buttons(plateau);
+        this.frame.add(this.buttons);
+
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
