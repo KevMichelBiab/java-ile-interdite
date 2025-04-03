@@ -24,6 +24,7 @@ abstract class Observable {
     public void notifyObservers() {
         for(Observer o : observers) {
             o.update();
+            System.out.println(o);
         }
     }
 }

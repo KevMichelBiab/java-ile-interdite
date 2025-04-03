@@ -14,12 +14,17 @@ public class Grid extends JPanel implements Observer{
         this.plateau = plateau;
         this.plateau.addObserver(this);
 
-        Dimension dim = new Dimension(100,400);
+        Dimension dim = new Dimension(800,450);
         this.setPreferredSize(dim);
     }
 
 
-    public void update() { repaint(); }
+    @Override
+    public void update() {
+        System.out.println("Grid updated!");
+        repaint();
+    }
+
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -37,7 +42,7 @@ public class Grid extends JPanel implements Observer{
             g.setColor(Color.WHITE);
         }
         if(c.getState() == ZoneState.FLOODED){
-            g.setColor(Color.GRAY);
+            g.setColor(Color.GREEN);
         }
         if(c.getState() == ZoneState.SUNK){
             g.setColor(Color.BLACK);
