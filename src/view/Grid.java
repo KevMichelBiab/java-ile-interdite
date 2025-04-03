@@ -10,9 +10,13 @@ public class Grid extends JPanel implements Observer{
 
     private final static int TAILLE = 12;
 
+    private player currentPlayer;
+
     public Grid(island plateau){
         this.plateau = plateau;
         this.plateau.addObserver(this);
+
+
 
         Dimension dim = new Dimension(800,450);
         this.setPreferredSize(dim);
@@ -48,6 +52,12 @@ public class Grid extends JPanel implements Observer{
             g.setColor(Color.BLACK);
         }
         g.fillRect(x*TAILLE,y*TAILLE,c.getWidth(), c.getHeight());
+
+        if(this.currentPlayer.getCurrentArea() == c){
+            g.setColor(Color.BLACK);  // Text color
+            g.drawString(currentPlayer.getName(), x * TAILLE + 2, y * TAILLE + TAILLE / 2);
+
+        }
 
     }
 
