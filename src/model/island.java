@@ -14,6 +14,8 @@ public class island extends Observable{
             }
         }
 
+
+
     }
     public void printIsland() {
         for (int i = 0; i < grid.length; i++) {
@@ -52,6 +54,7 @@ public class island extends Observable{
     public void setGrid(zone[][] grid) {
         this.grid = grid;
     }
+
 
     public static void main(String[] args) {
         // Create a new zone (e.g., 5x5)

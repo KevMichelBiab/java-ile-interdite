@@ -11,14 +11,20 @@ public class control implements ActionListener, KeyListener {
     private Player currentPlayer;
     private int maxActionsMoves;
 
+
+
+
     public control(island mod){
         this.mod = mod;
         this.maxActionsMoves = 0;
+
     }
 
     public control(island mod, Player currentPlayer){
         this(mod);
         this.currentPlayer = currentPlayer;
+
+
 
 
     }
@@ -40,11 +46,13 @@ public class control implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         if (this.maxActionsMoves < 3) {
             System.out.println("Executed");
+
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case KeyEvent.VK_UP:
 
                     this.currentPlayer.deplacement(Direction.direction.FRONT);
+
                     this.maxActionsMoves++;
                     System.out.println("Current coordinates: (" + this.currentPlayer.getX() + ", " + this.currentPlayer.getY() + ")");
 
@@ -52,23 +60,27 @@ public class control implements ActionListener, KeyListener {
                     break;
                 case KeyEvent.VK_DOWN:
                     this.currentPlayer.deplacement(Direction.direction.BACK);
+
                     this.maxActionsMoves++;
                     System.out.println("Current coordinates: (" + this.currentPlayer.getX() + ", " + this.currentPlayer.getY() + ")");
 
                     break;
                 case KeyEvent.VK_LEFT:
                     this.currentPlayer.deplacement(Direction.direction.LEFT);
+
                     this.maxActionsMoves++;
                     System.out.println("Current coordinates: (" + this.currentPlayer.getX() + ", " + this.currentPlayer.getY() + ")");
 
                     break;
                 case KeyEvent.VK_RIGHT:
                     this.currentPlayer.deplacement(Direction.direction.RIGHT);
+
                     this.maxActionsMoves++;
                     System.out.println("Current coordinates: (" + this.currentPlayer.getX() + ", " + this.currentPlayer.getY() + ")");
 
                     break;
             }
+
 
         }
     }

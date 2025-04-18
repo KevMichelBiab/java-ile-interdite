@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Grid extends JPanel implements Observer{
     private island plateau;
@@ -12,26 +14,47 @@ public class Grid extends JPanel implements Observer{
 
     public final static int TAILLE = 30;
 
-    private Player currentPlayer;
+    private ArrayList<Player> listOfPlayers;
 
-    public Grid(island plateau){
+
+
+    public ArrayList<Player> getListOfPlayers() {
+        return listOfPlayers;
+    }
+
+    public void setListOfPlayers(ArrayList<Player> listOfPlayers) {
+        this.listOfPlayers = listOfPlayers;
+    }
+
+    public island getPlateau() {
+        return plateau;
+    }
+
+    public void setPlateau(island plateau) {
+        this.plateau = plateau;
+    }
+
+    public Grid(island plateau, ArrayList<Player> players){
         this.plateau = plateau;
         this.plateau.addObserver(this);
 
-        this.currentPlayer = new Player("ALEXANDER");
-        this.currentPlayer.addObserver(this);
+        this.listOfPlayers = players;
 
+        for(Player play : this.listOfPlayers){
+            control ctrl = new control(this.plateau,play);
+            this.addKeyListener(ctrl);
+        }
 
         Dimension dim = new Dimension(island.LARGEUR * TAILLE, island.HAUTEUR * TAILLE);
         this.setPreferredSize(dim);
 
-        control ctrl = new control(this.plateau, this.currentPlayer);
-        this.addKeyListener(ctrl);
+
 
         setFocusable(true);
 
 
     }
+
 
 
     @Override
@@ -50,7 +73,9 @@ public class Grid extends JPanel implements Observer{
                 paint(g, this.plateau.getGrid()[i][j],i ,j );
             }
         }
-        this.drawPlayerNAme(g,this.currentPlayer.getX(),this.currentPlayer.getY());
+        for(Player play: this.listOfPlayers) {
+            drawPlayerNAme(g, play);
+        }
 
 
 
@@ -77,11 +102,10 @@ public class Grid extends JPanel implements Observer{
 
     }
 
-    public void drawPlayerNAme(Graphics g, int x, int y){
-         x = currentPlayer.getX();
-         y = currentPlayer.getY();
+    public void drawPlayerNAme(Graphics g, Player play){
 
-        String playerName = currentPlayer.getName();
+
+        String playerName = play.getName();
         Font font = new Font("Arial", Font.PLAIN, 12);
         g.setFont(font);
 
@@ -99,8 +123,8 @@ public class Grid extends JPanel implements Observer{
         }
 
         // Calculate the position to center the name in the cell
-        int centerX = x + (TAILLE - nameWidth) / 2;  // Center horizontally
-        int centerY = y + (TAILLE + nameHeight) / 2 - metrics.getDescent();  // Center vertically
+        int centerX = play.getX() + (TAILLE - nameWidth) / 2;  // Center horizontally
+        int centerY = play.getY() + (TAILLE + nameHeight) / 2 - metrics.getDescent();  // Center vertically
 
         // Draw the name
         g.setColor(Color.RED);
