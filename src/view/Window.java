@@ -11,13 +11,13 @@ public class Window  {
 
     protected Window(island plateau){
         this.frame = new JFrame("ILE INTERDITE");
-        this.frame.setSize(800,500);
+        this.frame.setSize(2000,1500);
         this.frame.setLayout(new BorderLayout());
 
         this.grid = new Grid(plateau);
         this.frame.add(this.grid);
 
-        this.buttons = new Buttons(plateau);
+        this.buttons = new Buttons(plateau,grid);
 
         this.frame.add(this.buttons);
 
@@ -26,6 +26,7 @@ public class Window  {
         this.frame.add(buttons, BorderLayout.EAST);  // Add the buttons panel to the right of the frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        grid.requestFocusInWindow();
 
 
     }
