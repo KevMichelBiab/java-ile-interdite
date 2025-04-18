@@ -3,6 +3,8 @@ package model;
 
 import view.Grid;
 
+import java.awt.event.KeyEvent;
+
 public class Player extends Observable{
     private String name;
 
@@ -15,6 +17,9 @@ public class Player extends Observable{
         this.x =0;
         this.y=0;
         this.playerKey = 0;
+
+
+
     };
 
     public String getName() {
@@ -78,6 +83,9 @@ public class Player extends Observable{
         notifyObservers();
 
     }
+
+
+
 
 
 
