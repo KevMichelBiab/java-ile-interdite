@@ -11,12 +11,14 @@ public class Player extends Observable{
     private int x;
     private int y;
     private int playerKey;
+    private int actionsRemaining;
 
     public Player(String name){
         this.name = name;
         this.x =0;
         this.y=0;
         this.playerKey = 0;
+        this.actionsRemaining = 3;
 
 
 
@@ -28,6 +30,17 @@ public class Player extends Observable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public int getActionsRemaining() {
+        return actionsRemaining;
+    }
+
+    public void decrementActions() {
+        if (actionsRemaining > 0) {
+            actionsRemaining--;
+        }
     }
 
     public int getX() {

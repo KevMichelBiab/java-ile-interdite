@@ -19,12 +19,13 @@ public class Window  {
 
         Player play1 = new Player("James");
         Player play2 = new Player("Eli");
+        Player play3 = new Player("Lex");
         ArrayList<Player> players = new ArrayList<>();
         players.add(play1);
         players.add(play2);
+        players.add(play3);
         this.grid = new Grid(plateau,players);
-        this.grid.getListOfPlayers().add(play1);
-        this.grid.getListOfPlayers().add(play2);
+
         System.out.println(this.grid.getListOfPlayers().size());
         this.frame.add(this.grid);
 

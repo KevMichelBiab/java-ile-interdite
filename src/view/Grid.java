@@ -38,12 +38,17 @@ public class Grid extends JPanel implements Observer{
         this.plateau = plateau;
         this.plateau.addObserver(this);
 
-        this.listOfPlayers = players;
+        this.listOfPlayers = new ArrayList<>(players);
 
         for(Player play : this.listOfPlayers){
-            control ctrl = new control(this.plateau,play);
-            this.addKeyListener(ctrl);
+
+            play.addObserver(this);
+
         }
+        control ctrl = new control(this.plateau, this.listOfPlayers);
+        this.addKeyListener(ctrl);
+
+
 
         Dimension dim = new Dimension(island.LARGEUR * TAILLE, island.HAUTEUR * TAILLE);
         this.setPreferredSize(dim);
@@ -117,14 +122,14 @@ public class Grid extends JPanel implements Observer{
         int nameHeight = metrics.getHeight();
 
 
-        int maxNameWidth = TAILLE - 5; // Leave some padding for the name
+        int maxNameWidth = TAILLE - 5;
         if (nameWidth > maxNameWidth) {
             playerName = playerName.substring(0, 3); // On fait le choix de reduire tous les noms a 3 caracteres
         }
 
         // Calculate the position to center the name in the cell
-        int centerX = play.getX() + (TAILLE - nameWidth) / 2;  // Center horizontally
-        int centerY = play.getY() + (TAILLE + nameHeight) / 2 - metrics.getDescent();  // Center vertically
+        int centerX = play.getX() + (TAILLE - nameWidth) / 2;
+        int centerY = play.getY() + (TAILLE + nameHeight) / 2 - metrics.getDescent();
 
         // Draw the name
         g.setColor(Color.RED);
