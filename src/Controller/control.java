@@ -59,7 +59,7 @@ public void keyPressed(KeyEvent e) {
     System.out.println("Value index: " + currentPlayerIndex);
     Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
 
-    // Control actions for each player up to a limit (3 actions per player)
+
     if (currentPlayer.getActionsRemaining() > 0) {
         int keyCode = e.getKeyCode();
 
@@ -77,19 +77,33 @@ public void keyPressed(KeyEvent e) {
             case KeyEvent.VK_RIGHT:
                 currentPlayer.deplacement(Direction.direction.RIGHT);
                 break;
+            case KeyEvent.VK_W:
+                this.mod.assechement(Direction.direction.FRONT,currentPlayer);
+                break;
+            case KeyEvent.VK_S:
+                this.mod.assechement(Direction.direction.CENTER,currentPlayer);
+                break;
+            case KeyEvent.VK_A:
+                this.mod.assechement(Direction.direction.LEFT,currentPlayer);
+                break;
+            case KeyEvent.VK_D:
+                this.mod.assechement(Direction.direction.RIGHT,currentPlayer);
+                break;
+            case KeyEvent.VK_Z:
+                this.mod.assechement(Direction.direction.BACK,currentPlayer);
+                break;
         }
-        currentPlayer.decrementActions(); // Decrease actions remaining for this player
+        currentPlayer.decrementActions();
         System.out.println("Remaining actions: " + currentPlayer.getActionsRemaining());
         System.out.println("Player " + currentPlayerIndex + ": (" + currentPlayer.getX() + ", " + currentPlayer.getY() + ")");
+
+        if (currentPlayer.getActionsRemaining() == 0) {
+            this.mod.init();
+            currentPlayerIndex = (currentPlayerIndex + 1) % listPlayers.size();
+            System.out.println("Switched to player: " + currentPlayerIndex);
+        }
     }
 
-    // Move to the next player after their turn is finished
-
-    System.out.println("Now List size: " + this.listPlayers.size());
-    currentPlayerIndex = (currentPlayerIndex + 1) % this.listPlayers.size();
-    System.out.println("Value index: " + currentPlayerIndex);
-    System.out.println();
-    // Possibly reset maxActionsMoves here if needed (for each player, not global)
 }
 
 

@@ -45,6 +45,7 @@ public class Grid extends JPanel implements Observer{
             play.addObserver(this);
 
         }
+
         control ctrl = new control(this.plateau, this.listOfPlayers);
         this.addKeyListener(ctrl);
 
@@ -131,9 +132,13 @@ public class Grid extends JPanel implements Observer{
         int centerX = play.getX() + (TAILLE - nameWidth) / 2;
         int centerY = play.getY() + (TAILLE + nameHeight) / 2 - metrics.getDescent();
 
+
         // Draw the name
         g.setColor(Color.RED);
         g.drawString(playerName, centerX, centerY);
     }
+
+
+
 
 }

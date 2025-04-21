@@ -12,6 +12,7 @@ public class Player extends Observable{
     private int y;
     private int playerKey;
     private int actionsRemaining;
+    private island plateau;
 
     public Player(String name){
         this.name = name;
@@ -95,6 +96,31 @@ public class Player extends Observable{
             }
         notifyObservers();
 
+    }
+    /*
+    -Considere qu'on a la position actuelle du joeur
+    -We can use enum FRONT, BACK, RIGHT,LEFT
+    -Else il asseche ou il se trouve
+    */
+
+    public void assechement(Direction.direction whereToGo){
+        switch (whereToGo) {
+            case Direction.direction.FRONT:
+                this.y += Grid.TAILLE;
+                break;
+            case Direction.direction.BACK:
+
+                break;
+
+            case Direction.direction.RIGHT:
+
+                break;
+
+            case Direction.direction.LEFT:
+
+                break;
+        }
+        notifyObservers();
     }
 
 

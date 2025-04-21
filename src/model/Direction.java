@@ -2,7 +2,7 @@ package model;
 
 public class Direction {
     public enum direction {
-        LEFT,RIGHT,BACK,FRONT
+        LEFT,RIGHT,BACK,FRONT,CENTER
     }
 
 }
