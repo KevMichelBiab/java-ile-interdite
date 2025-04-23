@@ -14,6 +14,9 @@ public class Main {
 
         Window window = new Window(plat,players);
         control ctrl = new control(plat, players);
+        ctrl.setWindow(window);
+        window.getGrid().addKeyListener(ctrl);
+
 
 
 

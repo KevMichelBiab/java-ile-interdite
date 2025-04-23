@@ -32,6 +32,9 @@ public class control implements ActionListener, KeyListener, DocumentListener {
         this.listPlayers = player;
     }
 
+    public void setWindow(view.Window window){
+        this.window = window;
+    }
 
 
 
@@ -63,7 +66,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
         Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
         System.out.println("Current coordinates of player " + currentPlayerIndex + " (" + currentPlayer.getX() + currentPlayer.getY() + ")");
-
+        window.setLabel("Current Player: " + (this.listPlayers.get(currentPlayerIndex).getName()));
         if (currentPlayer.getActionsRemaining() > 0) {
             int keyCode = e.getKeyCode();
 
@@ -103,14 +106,15 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
             if (currentPlayer.getActionsRemaining() == 0) {
                 this.mod.init();
-                currentPlayerIndex = (currentPlayerIndex + 1) % listPlayers.size();
-                System.out.println("Switched to player: " + currentPlayerIndex);
+
                 currentPlayer.resetAction();
 
 
-
-
-
+                if (window != null) {
+                    window.setLabel("Current Player: " + (this.listPlayers.get(currentPlayerIndex).getName()));
+                }
+                currentPlayerIndex = (currentPlayerIndex + 1) % listPlayers.size();
+                System.out.println("Switched to player: " + currentPlayerIndex);
 
 
             }

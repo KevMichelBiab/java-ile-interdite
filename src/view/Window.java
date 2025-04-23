@@ -14,7 +14,7 @@ public class Window  {
     private Grid grid;
     private Buttons buttons;
 
-    private JTextField textCurrentPlayer;
+    private JLabel label;
     private ArrayList<Player> players;
 
 
@@ -40,7 +40,7 @@ public class Window  {
 
 
         JPanel playerInputPanel = new JPanel();
-        JLabel label = new JLabel("Current Player: ");
+        label = new JLabel("Current Player: ");
 
         /*Update the current current player*/
 
@@ -62,6 +62,19 @@ public class Window  {
     }
 
 
+    public JLabel getLabel() {
+        return label;
+    }
 
+    public Grid getGrid() {
+        return grid;
+    }
 
+    public void setGrid(Grid grid) {
+        this.grid = grid;
+    }
+
+    public void setLabel(String name) {
+        this.label.setText(name);
+    }
 }
