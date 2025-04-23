@@ -57,8 +57,9 @@ public void keyPressed(KeyEvent e) {
     if (this.listPlayers.size() == 0) return; // Ensure there are players
 
     System.out.println("Value index: " + currentPlayerIndex);
-    Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
 
+    Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
+    System.out.println("Current coordinates of player " + currentPlayerIndex + " (" + currentPlayer.getX() + currentPlayer.getY() + ")");
 
     if (currentPlayer.getActionsRemaining() > 0) {
         int keyCode = e.getKeyCode();
@@ -101,6 +102,7 @@ public void keyPressed(KeyEvent e) {
             this.mod.init();
             currentPlayerIndex = (currentPlayerIndex + 1) % listPlayers.size();
             System.out.println("Switched to player: " + currentPlayerIndex);
+            currentPlayer.resetAction();
         }
     }
 

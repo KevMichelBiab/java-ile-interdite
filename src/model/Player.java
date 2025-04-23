@@ -12,7 +12,7 @@ public class Player extends Observable{
     private int y;
     private int playerKey;
     private int actionsRemaining;
-    private island plateau;
+
 
     public Player(String name){
         this.name = name;
@@ -43,6 +43,9 @@ public class Player extends Observable{
             actionsRemaining--;
         }
     }
+    public void resetAction(){
+        this.actionsRemaining = 3;
+    }
 
     public int getX() {
         return x;
@@ -68,59 +71,32 @@ public class Player extends Observable{
         this.playerKey = keynumber;
     }
 
-    public void deplacement( Direction.direction whereToGo){
-            switch (whereToGo) {
-                case Direction.direction.FRONT:
-                    if( this.y - Grid.TAILLE >= 0) {
-                        this.y -= Grid.TAILLE;
-
-                    }
-                    break;
-                case Direction.direction.BACK:
-                    if( this.y + Grid.TAILLE < island.HAUTEUR * Grid.TAILLE){
-                        this.y+= Grid.TAILLE;
-                    }
-                    break;
-
-                case Direction.direction.RIGHT:
-                    if (this.x + Grid.TAILLE < island.LARGEUR * Grid.TAILLE) {  // Check if moving right is within bounds
-                        this.x+=Grid.TAILLE;
-                    }
-                    break;
-
-                case Direction.direction.LEFT:
-                    if (this.x - Grid.TAILLE>= 0) {  // Check if moving left is within bounds
-                        this.x-=Grid.TAILLE;
-                    }
-                    break;
-            }
+    public void deplacement(Direction.direction whereToGo) {
+        switch (whereToGo) {
+            case FRONT:
+                if (this.y > 0) this.y--;
+                break;
+            case BACK:
+                if (this.y < island.HAUTEUR - 1) this.y++;
+                break;
+            case RIGHT:
+                if (this.x < island.LARGEUR - 1) this.x++;
+                break;
+            case LEFT:
+                if (this.x > 0) this.x--;
+                break;
+        }
         notifyObservers();
-
     }
+
     /*
     -Considere qu'on a la position actuelle du joeur
     -We can use enum FRONT, BACK, RIGHT,LEFT
     -Else il asseche ou il se trouve
     */
 
-    public void assechement(Direction.direction whereToGo){
-        switch (whereToGo) {
-            case Direction.direction.FRONT:
-                this.y += Grid.TAILLE;
-                break;
-            case Direction.direction.BACK:
-
-                break;
-
-            case Direction.direction.RIGHT:
-
-                break;
-
-            case Direction.direction.LEFT:
-
-                break;
-        }
-        notifyObservers();
+    public boolean isInBounds(){
+        return (this.x >= 0 && this.x < island.LARGEUR) && (this.y >= 0 && this.y < island.HAUTEUR);
     }
 
 

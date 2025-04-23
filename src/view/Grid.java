@@ -129,8 +129,10 @@ public class Grid extends JPanel implements Observer{
         }
 
         // Calculate the position to center the name in the cell
-        int centerX = play.getX() + (TAILLE - nameWidth) / 2;
-        int centerY = play.getY() + (TAILLE + nameHeight) / 2 - metrics.getDescent();
+        int pixelX = play.getX() * Grid.TAILLE;
+        int pixelY = play.getY() * Grid.TAILLE;
+        int centerX = pixelX + (TAILLE - nameWidth) / 2;
+        int centerY = pixelY + (TAILLE + nameHeight) / 2 - metrics.getDescent();
 
 
         // Draw the name

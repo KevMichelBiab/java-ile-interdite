@@ -51,32 +51,47 @@ public class island extends Observable{
     public void assechement(Direction.direction whereToGo, Player p){
         switch (whereToGo) {
             case Direction.direction.FRONT:
-                if(this.grid[p.getX()][p.getY()-Grid.TAILLE].getState() == ZoneState.FLOODED){
-                    this.grid[p.getX()][p.getY()-Grid.TAILLE].setState(ZoneState.NORMAL);
+                if(p.isInBounds()) {
+                    if (this.grid[p.getX()][p.getY() - 1].getState() == ZoneState.FLOODED) {
+                        System.out.println("Coordinates after updating: " + p.getX() + p.getY());
+                        this.grid[p.getX()][p.getY() - 1].setState(ZoneState.NORMAL);
+                    }
                 }
                 break;
             case Direction.direction.BACK:
-                if(this.grid[p.getX()][p.getY()+Grid.TAILLE].getState() == ZoneState.FLOODED){
-                    this.grid[p.getX()][p.getY()-Grid.TAILLE].setState(ZoneState.NORMAL);
+                if(p.isInBounds()) {
+                    if (this.grid[p.getX()][p.getY() + 1].getState() == ZoneState.FLOODED) {
+                        System.out.println("Coordinates after updating: " + p.getX() + p.getY());
+                        this.grid[p.getX()][p.getY() + 1].setState(ZoneState.NORMAL);
+                    }
                 }
                 break;
 
             case Direction.direction.RIGHT:
-                if(this.grid[p.getX()+Grid.TAILLE][p.getY()].getState() == ZoneState.FLOODED){
-                    this.grid[p.getX()+Grid.TAILLE][p.getY()].setState(ZoneState.NORMAL);
+                if(p.isInBounds()) {
+                    if (this.grid[p.getX() + 1][p.getY()].getState() == ZoneState.FLOODED) {
+                        System.out.println("Coordinates after updating: " + p.getX() + p.getY());
+                        this.grid[p.getX() + 1][p.getY()].setState(ZoneState.NORMAL);
+                    }
                 }
                 break;
 
             case Direction.direction.LEFT:
-                if(this.grid[p.getX()-Grid.TAILLE][p.getY()].getState() == ZoneState.FLOODED){
-                    this.grid[p.getX()-Grid.TAILLE][p.getY()].setState(ZoneState.NORMAL);
+                if(p.isInBounds()) {
+                    if (this.grid[p.getX() - 1][p.getY()].getState() == ZoneState.FLOODED) {
+                        System.out.println("Coordinates after updating: " + p.getX() + p.getY());
+                        this.grid[p.getX() - 1][p.getY()].setState(ZoneState.NORMAL);
+                    }
                 }
                 break;
             case Direction.direction.CENTER:
-                if(this.grid[p.getX()][p.getY()].getState() == ZoneState.FLOODED){
-                    this.grid[p.getX()][p.getY()].setState(ZoneState.NORMAL);
+                if(p.isInBounds()) {
+                    if (this.grid[p.getX()][p.getY()].getState() == ZoneState.FLOODED) {
+                        this.grid[p.getX()][p.getY()].setState(ZoneState.NORMAL);
+                    }
                 }
         }
+
         notifyObservers();
     }
 
