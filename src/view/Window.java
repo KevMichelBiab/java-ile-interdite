@@ -15,6 +15,7 @@ public class Window  {
     private Buttons buttons;
 
     private JLabel label;
+    private JTextField textfield;
     private ArrayList<Player> players;
 
 
@@ -40,13 +41,15 @@ public class Window  {
 
 
         JPanel playerInputPanel = new JPanel();
-        label = new JLabel("Current Player: ");
 
-        /*Update the current current player*/
+        this.label = new JLabel("Current Player");
+        this.textfield = new JTextField(15);
 
 
 
-        playerInputPanel.add(label);
+
+        playerInputPanel.add(this.label);
+        playerInputPanel.add(this.textfield);
 
 
         gameSettings.add(playerInputPanel);
@@ -68,6 +71,14 @@ public class Window  {
 
     public Grid getGrid() {
         return grid;
+    }
+
+    public JTextField getTextfield() {
+        return textfield;
+    }
+
+    public void setTextfield(String name) {
+        this.textfield.setText(name);
     }
 
     public void setGrid(Grid grid) {
