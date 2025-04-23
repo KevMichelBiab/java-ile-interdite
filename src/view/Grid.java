@@ -44,6 +44,7 @@ public class Grid extends JPanel implements Observer{
 
             play.addObserver(this);
 
+
         }
 
         control ctrl = new control(this.plateau, this.listOfPlayers);

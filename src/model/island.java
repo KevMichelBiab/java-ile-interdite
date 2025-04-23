@@ -2,6 +2,8 @@ package model;
 
 import view.Grid;
 
+import java.util.ArrayList;
+
 public class island extends Observable{
     private zone[][] grid;
 
@@ -103,6 +105,8 @@ public class island extends Observable{
     public void setGrid(zone[][] grid) {
         this.grid = grid;
     }
+
+
 
 
 

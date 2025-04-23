@@ -1,6 +1,9 @@
 package view;
+import Controller.control;
 import model.*;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +13,8 @@ public class Window  {
     private JFrame frame;
     private Grid grid;
     private Buttons buttons;
+
+
 
 
     protected Window(island plateau){
@@ -40,6 +45,9 @@ public class Window  {
         JPanel playerInputPanel = new JPanel();
         JLabel label = new JLabel("Current Player: ");
         JTextField textCurrentPlayer = new JTextField(15);
+        /*Update the current current player*/
+
+
         textCurrentPlayer.setMaximumSize(new Dimension(200, 25));
         playerInputPanel.add(label);
         playerInputPanel.add(textCurrentPlayer);
