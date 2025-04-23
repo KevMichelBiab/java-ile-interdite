@@ -36,9 +36,6 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
 
 
-
-
-
     public void actionPerformed(ActionEvent e) {
 
         System.out.println("Button presseed!");
@@ -102,13 +99,18 @@ public class control implements ActionListener, KeyListener, DocumentListener {
             }
             currentPlayer.decrementActions();
             System.out.println("Remaining actions: " + currentPlayer.getActionsRemaining());
-            System.out.println("Player " + currentPlayerIndex + ": (" + currentPlayer.getX() + ", " + currentPlayer.getY() + ")");
+            System.out.println("Player " + this.listPlayers.get(currentPlayerIndex).getName() + ": (" + currentPlayer.getX() + ", " + currentPlayer.getY() + ")");
 
             if (currentPlayer.getActionsRemaining() == 0) {
                 this.mod.init();
                 currentPlayerIndex = (currentPlayerIndex + 1) % listPlayers.size();
                 System.out.println("Switched to player: " + currentPlayerIndex);
                 currentPlayer.resetAction();
+
+
+
+
+
 
 
             }

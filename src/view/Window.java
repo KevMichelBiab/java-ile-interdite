@@ -14,22 +14,19 @@ public class Window  {
     private Grid grid;
     private Buttons buttons;
 
+    private JTextField textCurrentPlayer;
+    private ArrayList<Player> players;
 
 
 
-    protected Window(island plateau){
+
+    protected Window(island plateau, ArrayList<Player> players){
         this.frame = new JFrame("ILE INTERDITE");
         this.frame.setSize(2000,1500);
         this.frame.setLayout(new BorderLayout());
 
 
-        Player play1 = new Player("James");
-        Player play2 = new Player("Eli");
-        Player play3 = new Player("Lex");
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(play1);
-        players.add(play2);
-        players.add(play3);
+
         this.grid = new Grid(plateau,players);
 
         System.out.println(this.grid.getListOfPlayers().size());
@@ -44,13 +41,13 @@ public class Window  {
 
         JPanel playerInputPanel = new JPanel();
         JLabel label = new JLabel("Current Player: ");
-        JTextField textCurrentPlayer = new JTextField(15);
+
         /*Update the current current player*/
 
 
-        textCurrentPlayer.setMaximumSize(new Dimension(200, 25));
+
         playerInputPanel.add(label);
-        playerInputPanel.add(textCurrentPlayer);
+
 
         gameSettings.add(playerInputPanel);
 
@@ -63,6 +60,8 @@ public class Window  {
 
 
     }
+
+
 
 
 }
