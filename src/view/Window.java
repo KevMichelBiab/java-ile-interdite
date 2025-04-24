@@ -7,6 +7,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.DigestException;
 import java.util.ArrayList;
 
 public class Window  {
@@ -14,12 +15,15 @@ public class Window  {
     private Grid grid;
     private Buttons buttons;
 
+
     private JLabel labelName;
     private JLabel labelKey;
     private JLabel labelRemainActions;
+    private JLabel labelArtefacts;
     private JTextField textFieldActions;
     private JTextField textfieldName;
     private JTextField textfieldKey;
+    private JTextField textfieldArtefacts;
     private ArrayList<Player> players;
 
 
@@ -27,7 +31,7 @@ public class Window  {
 
     protected Window(island plateau, ArrayList<Player> players){
         this.frame = new JFrame("ILE INTERDITE");
-        this.frame.setSize(500,500);
+        this.frame.setSize(2000,700);
         this.frame.setLayout(new BorderLayout());
 
 
@@ -36,46 +40,80 @@ public class Window  {
 
         JPanel gameSettings = new JPanel();
         gameSettings.setLayout(new BoxLayout(gameSettings, BoxLayout.Y_AXIS));
+        //gameSettings.setBackground(Color.CYAN);
+
+        JPanel buttonSection = new JPanel();
+        buttonSection.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
+        //buttonSection.setBackground(Color.PINK);
         this.buttons = new Buttons(plateau,grid);
-        this.buttons.setMaximumSize(new Dimension(1000, 500));
-        gameSettings.add(this.buttons);
+        buttonSection.add(this.buttons);
+        gameSettings.add(buttonSection);
+
+
 
         JPanel playerInputPanel = new JPanel();
-        this.labelName = new JLabel("Current Player");
-        this.textfieldName = new JTextField(15);
+        playerInputPanel.setPreferredSize(new Dimension(1000, 1000));
 
-        this.textfieldName.setText(players.get(0).getName());
-        this.labelKey = new JLabel("Key count");
+        playerInputPanel.setLayout(new BoxLayout(playerInputPanel, BoxLayout.Y_AXIS));
+       // playerInputPanel.setBackground(Color.LIGHT_GRAY);
+        for(int i = 0; i< players.size(); i++) {
 
-        this.textfieldKey = new JTextField(15);
-        this.textfieldKey.setText(String.valueOf(players.get(0).getPlayerKey()));
+            JPanel playerRow = new JPanel();
+            playerRow.setLayout(new BoxLayout(playerRow, BoxLayout.X_AXIS));
+            playerRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        this.labelRemainActions = new JLabel("Remaining actions");
-        this.textFieldActions = new JTextField(15);
-        this.textFieldActions.setText(String.valueOf(players.get(0).getActionsRemaining()));
+            Dimension shortFieldSize = new Dimension(40, 25);
+            Dimension nameFieldSize = new Dimension(100, 25);
 
-        playerInputPanel.add(this.labelName);
-        playerInputPanel.add(this.textfieldName);
+            this.labelName = new JLabel("Current Player");
+            this.textfieldName = new JTextField(15);
+            this.textfieldName.setMaximumSize(nameFieldSize);
+            this.textfieldName.setText(players.get(i).getName());
 
-        playerInputPanel.add(this.labelKey);
-        playerInputPanel.add(this.textfieldKey);
+            this.labelKey = new JLabel("Key count");
+            this.textfieldKey = new JTextField(15);
+            this.textfieldKey.setMaximumSize(shortFieldSize);
+            this.textfieldKey.setText(String.valueOf(players.get(i).getPlayerKey()));
 
-        playerInputPanel.add(this.labelRemainActions);
-        playerInputPanel.add(this.textFieldActions);
+            this.labelRemainActions = new JLabel("Remaining actions");
+            this.textFieldActions = new JTextField(15);
+            this.textFieldActions.setMaximumSize(shortFieldSize);
+            this.textFieldActions.setText(String.valueOf(players.get(i).getActionsRemaining()));
 
-        /*Create a pannel to keep track of the keys of all players*/
+            this.labelArtefacts = new JLabel("Artefacts numbers: ");
+            this.textfieldArtefacts = new JTextField(15);
+            this.textfieldArtefacts.setMaximumSize(shortFieldSize);
+            this.textfieldArtefacts.setText(String.valueOf(players.get(i).getCountArteFacts()));
 
-       /*JPanel keyBox = new JPanel();
-        for(Player p : players){
-            JLabel keyScoreText = new JLabel(p.getName() + " Score Keys: ");
-            JTextField KeyScore = new JTextField(15);
-            KeyScore.setText(String.valueOf(p.getPlayerKey()));
-            keyBox.add(keyScoreText);
-            keyBox.add(KeyScore);
-        } An idea to always have the players key score on the screen*/
+            playerRow.add(this.labelName);
+            playerRow.add(this.textfieldName);
+            playerInputPanel.add(Box.createVerticalStrut(10));
 
+
+
+            playerRow.add(this.labelKey);
+            playerRow.add(this.textfieldKey);
+
+
+
+
+
+            playerRow.add(this.labelRemainActions);
+            playerRow.add(this.textFieldActions);
+
+
+
+
+
+            playerRow.add(this.labelArtefacts);
+            playerRow.add(this.textfieldArtefacts);
+            playerInputPanel.add(playerRow);
+
+        }
+
+       // playerInputPanel.setBackground(Color.GREEN);
         gameSettings.add(playerInputPanel);
-
+       //gameSettings.setBackground(Color.YELLOW);
 
         this.frame.add(grid, BorderLayout.WEST);  // Add the grid panel to the left of the frame
         this.frame.add(gameSettings, BorderLayout.EAST);  // Add the buttons panel to the right of the frame
@@ -87,51 +125,67 @@ public class Window  {
     }
 
 
-    public JLabel getLabelName() {
-        return labelName;
-    }
+
 
     public Buttons getButtons() {
         return buttons;
+    }
+    public void setButtons(Buttons buttons) {
+        this.buttons = buttons;
     }
 
     public JTextField getTextFieldActions() {
         return textFieldActions;
     }
-
     public void setTextFieldActions(String actionCount) {
         this.textFieldActions.setText(actionCount);
     }
 
-    public void setButtons(Buttons buttons) {
-        this.buttons = buttons;
-    }
 
     public Grid getGrid() {
         return grid;
     }
-
-    public JTextField getTextfieldName() {
-        return textfieldName;
-    }
-
-    public void setTextfieldName(String name) {
-        this.textfieldName.setText(name);
-    }
-
-    public JTextField getTextfieldKey() {
-        return textfieldKey;
-    }
-
-    public void setTextfieldKey(String KeyCount) {
-        this.textfieldKey.setText(KeyCount);
-    }
-
     public void setGrid(Grid grid) {
         this.grid = grid;
     }
 
+
+    public JTextField getTextfieldName() {
+        return textfieldName;
+    }
+    public void setTextfieldName(String name) {
+        this.textfieldName.setText(name);
+    }
+
+
+    public JTextField getTextfieldKey() {
+        return textfieldKey;
+    }
+    public void setTextfieldKey(String KeyCount) {
+        this.textfieldKey.setText(KeyCount);
+    }
+
+
     public void setLabelName(String name) {
         this.labelName.setText(name);
+    }
+    public JLabel getLabelName() {
+        return labelName;
+    }
+
+    public JLabel getLabelArtefacts() {
+        return labelArtefacts;
+    }
+
+    public void setLabelArtefacts(JLabel labelArtefacts) {
+        this.labelArtefacts = labelArtefacts;
+    }
+
+    public JTextField getTextfieldArtefacts() {
+        return textfieldArtefacts;
+    }
+
+    public void setTextfieldArtefacts(String ArteCounts) {
+        this.textfieldArtefacts.setText(ArteCounts);
     }
 }

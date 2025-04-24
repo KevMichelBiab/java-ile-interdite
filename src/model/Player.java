@@ -12,6 +12,7 @@ public class Player extends Observable{
     private int y;
     private int playerKey;
     private int actionsRemaining;
+    private int CountArteFacts;
 
 
     public Player(String name){
@@ -20,13 +21,26 @@ public class Player extends Observable{
         this.y=0;
         this.playerKey = 0;
         this.actionsRemaining = 3;
+        this.CountArteFacts = 0;
 
 
 
     };
 
+    public void setActionsRemaining(int actionsRemaining) {
+        this.actionsRemaining = actionsRemaining;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public int getCountArteFacts() {
+        return CountArteFacts;
+    }
+
+    public void setCountArteFacts(int countArteFacts) {
+        CountArteFacts = countArteFacts;
     }
 
     public void setName(String name) {
@@ -74,16 +88,16 @@ public class Player extends Observable{
     public void deplacement(Direction.direction whereToGo) {
         switch (whereToGo) {
             case FRONT:
-                if (this.y > 0) this.y--;
+                if (this.x > 0) this.x--;
                 break;
             case BACK:
-                if (this.y < island.HAUTEUR - 1) this.y++;
+                if (this.x < island.HAUTEUR - 1) this.x++;
                 break;
             case RIGHT:
-                if (this.x < island.LARGEUR - 1) this.x++;
+                if (this.y < island.LARGEUR - 1) this.y++;
                 break;
             case LEFT:
-                if (this.x > 0) this.x--;
+                if (this.y > 0) this.y--;
                 break;
         }
         notifyObservers();

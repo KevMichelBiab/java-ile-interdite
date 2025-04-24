@@ -55,9 +55,8 @@ public class control implements ActionListener, KeyListener, DocumentListener {
             window.setTextfieldName(this.listPlayers.get(currentPlayerIndex).getName());
             window.setTextfieldKey(String.valueOf(currentPlayer.getPlayerKey()));
             window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
-
-
             window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
+            window.setTextfieldArtefacts(String.valueOf(currentPlayer.getCountArteFacts()));
 
         }
         if (currentPlayer.getActionsRemaining() == 0) {
@@ -69,6 +68,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
             window.setTextfieldName(this.listPlayers.get(currentPlayerIndex).getName());
             window.setTextfieldKey(String.valueOf(currentPlayer.getPlayerKey()));
             window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
+            window.setTextfieldArtefacts(String.valueOf(currentPlayer.getCountArteFacts()));
 
         }
 
@@ -94,10 +94,11 @@ public class control implements ActionListener, KeyListener, DocumentListener {
         System.out.println("Value index: " + currentPlayerIndex);
 
         Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
-        System.out.println("Current coordinates of player " + currentPlayerIndex + " (" + currentPlayer.getX() + currentPlayer.getY() + ")");
+
         window.setTextfieldName(this.listPlayers.get(currentPlayerIndex).getName());
         window.setTextfieldKey(String.valueOf(currentPlayer.getPlayerKey()));
         window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
+        window.setTextfieldArtefacts(String.valueOf(currentPlayer.getCountArteFacts()));
         if (currentPlayer.getActionsRemaining() > 0) {
             int keyCode = e.getKeyCode();
 
@@ -107,35 +108,47 @@ public class control implements ActionListener, KeyListener, DocumentListener {
                     currentPlayer.deplacement(Direction.direction.FRONT);
                     break;
                 case KeyEvent.VK_DOWN:
+
                     currentPlayer.deplacement(Direction.direction.BACK);
                     break;
                 case KeyEvent.VK_LEFT:
+
                     currentPlayer.deplacement(Direction.direction.LEFT);
                     break;
                 case KeyEvent.VK_RIGHT:
+
                     currentPlayer.deplacement(Direction.direction.RIGHT);
                     break;
                 case KeyEvent.VK_W:
+
                     this.mod.assechement(Direction.direction.FRONT,currentPlayer);
                     break;
                 case KeyEvent.VK_S:
+
                     this.mod.assechement(Direction.direction.CENTER,currentPlayer);
                     break;
                 case KeyEvent.VK_A:
+
                     this.mod.assechement(Direction.direction.LEFT,currentPlayer);
                     break;
                 case KeyEvent.VK_D:
+
                     this.mod.assechement(Direction.direction.RIGHT,currentPlayer);
                     break;
                 case KeyEvent.VK_Z:
+
                     this.mod.assechement(Direction.direction.BACK,currentPlayer);
                     break;
+                case KeyEvent.VK_ENTER:
+                    this.mod.recupArtefacts(currentPlayer);
 
             }
             currentPlayer.decrementActions();
+            System.out.println("Current coordinate: " + currentPlayer.getX() + ", " + currentPlayer.getY());
             window.setTextfieldName(this.listPlayers.get(currentPlayerIndex).getName());
             window.setTextfieldKey(String.valueOf(currentPlayer.getPlayerKey()));
             window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
+            window.setTextfieldArtefacts(String.valueOf(currentPlayer.getCountArteFacts()));
 
 
             if (currentPlayer.getActionsRemaining() == 0) {
@@ -148,6 +161,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
                 window.setTextfieldName(this.listPlayers.get(currentPlayerIndex).getName());
                 window.setTextfieldKey(String.valueOf(currentPlayer.getPlayerKey()));
                 window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
+                window.setTextfieldArtefacts(String.valueOf(currentPlayer.getCountArteFacts()));
 
             }
         }
@@ -174,5 +188,17 @@ public class control implements ActionListener, KeyListener, DocumentListener {
     @Override
     public void changedUpdate(DocumentEvent e) {
 
+    }
+
+    public boolean winningParty(){
+        int count = 0;
+        boolean onHelicop = true;
+        for(int i = 0; i<this.listPlayers.size(); i++){
+            count += this.listPlayers.get(i).getCountArteFacts();
+            if(!(this.mod.ifPlayerOnHelicop(this.listPlayers.get(i)))){
+                onHelicop = !onHelicop;
+            }
+        }
+       return (count == 4) && onHelicop;
     }
 }

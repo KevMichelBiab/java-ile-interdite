@@ -79,7 +79,7 @@ public class Grid extends JPanel implements Observer{
         if(c.getState() == ZoneState.SUNK){
             g.setColor(Color.BLACK);
         }
-        if(c instanceof ArtefactsZones){
+        if(c.getState() == ZoneState.ARTEFACTS){
             g.setColor(Color.ORANGE);
         }
         if(c.getState() == ZoneState.HELICOPTER){
@@ -115,10 +115,12 @@ public class Grid extends JPanel implements Observer{
         }
 
         // Calculate the position to center the name in the cell
-        int pixelX = (play.getX())* Grid.TAILLE;
-        int pixelY = (play.getY())* Grid.TAILLE;
+
+        int pixelX = (play.getY())* Grid.TAILLE;
+        int pixelY = (play.getX())* Grid.TAILLE;
         int centerX = pixelX + (TAILLE - nameWidth) / 2;
         int centerY = pixelY + (TAILLE + nameHeight) / 2 - metrics.getDescent();
+
 
         // Draw the name
         g.setColor(Color.RED);

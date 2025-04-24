@@ -15,8 +15,8 @@ public class island extends Observable{
         this.grid = new zone[LARGEUR][HAUTEUR];
 
         // Generate the helicopter position
-        int helicoX = (int) (Math.random() * LARGEUR);
-        int helicoY = (int) (Math.random() * HAUTEUR);
+        int helicoX = 1 + (int) (Math.random() * (LARGEUR-1));
+        int helicoY = 1 + (int) (Math.random() * (HAUTEUR-1));
 
         //Artefacts
         int artefact1X = (int) (Math.random() * LARGEUR);
@@ -84,7 +84,7 @@ public class island extends Observable{
             int randomJ = (int)(Math.random() * (HAUTEUR));
 
             // Only flood the zone if it's not already flooded
-            if(this.grid[randomI][randomJ].getState() != ZoneState.FLOODED) {
+            if(this.grid[randomI][randomJ].getState() == ZoneState.NORMAL) {
                 this.grid[randomI][randomJ].setState(ZoneState.FLOODED);
                 System.out.println(" " + randomI + ":" + randomJ + " are " + this.grid[randomI][randomJ].getState());
                 floodedCount++;
@@ -93,6 +93,7 @@ public class island extends Observable{
 
         notifyObservers();
     }
+
 
     public void actionButtonFinDeTour(Player p){
         if(Math.random() > 0.8){
@@ -148,6 +149,15 @@ public class island extends Observable{
         notifyObservers();
     }
 
+    public void recupArtefacts(Player p){
+        zone zoneChecked = this.grid[p.getX()][p.getY()];
+        if(zoneChecked.getState() == ZoneState.ARTEFACTS){
+            zoneChecked.setState(ZoneState.NORMAL);
+            p.setCountArteFacts(p.getCountArteFacts() + 1);
+        }
+        notifyObservers();
+    }
+
 
     public zone[][] getGrid() {
         return grid;
@@ -159,6 +169,16 @@ public class island extends Observable{
     public void generateKey(Player p){
         System.out.println("Key added!");
         p.setPlayerKey(p.getPlayerKey() + 1);
+    }
+
+    public boolean ifPlayerOnHelicop(Player p){
+        boolean isOnHelicop = true;
+        for(int i=0; i<this.grid.length; i++){
+            if(!(this.grid[p.getX()][p.getY()].getState() == ZoneState.HELICOPTER)){
+                isOnHelicop = !isOnHelicop;
+            }
+        }
+        return isOnHelicop;
     }
 
     public static void main(String[] args) {
