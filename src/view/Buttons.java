@@ -40,6 +40,7 @@ public class Buttons extends JPanel implements Observer{
 
         // Initialize control and set action listeners for buttons (if needed)
         control ctrl = new control(this.mod);
+
         finDeTour.setFocusable(false);
         partyWon.setFocusable(false);
     }

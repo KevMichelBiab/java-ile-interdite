@@ -1,13 +1,7 @@
 package view;
-import Controller.control;
 import model.*;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.security.DigestException;
 import java.util.ArrayList;
 
 public class Window  {
@@ -20,16 +14,18 @@ public class Window  {
     private JLabel labelKey;
     private JLabel labelRemainActions;
     private JLabel labelArtefacts;
-    private JTextField textFieldActions;
-    private JTextField textfieldName;
-    private JTextField textfieldKey;
-    private JTextField textfieldArtefacts;
+    private ArrayList<JTextField> textFieldActions = new ArrayList<>();
+    private ArrayList<JTextField> textfieldNames = new ArrayList<>();
+    private ArrayList<JTextField> textfieldKeys = new ArrayList<>();
+    private ArrayList<JTextField> textfieldArtefacts = new ArrayList<>();
     private ArrayList<Player> players;
 
 
 
 
+
     protected Window(island plateau, ArrayList<Player> players){
+
         this.frame = new JFrame("ILE INTERDITE");
         this.frame.setSize(2000,700);
         this.frame.setLayout(new BorderLayout());
@@ -57,7 +53,6 @@ public class Window  {
         playerInputPanel.setLayout(new BoxLayout(playerInputPanel, BoxLayout.Y_AXIS));
        // playerInputPanel.setBackground(Color.LIGHT_GRAY);
         for(int i = 0; i< players.size(); i++) {
-
             JPanel playerRow = new JPanel();
             playerRow.setLayout(new BoxLayout(playerRow, BoxLayout.X_AXIS));
             playerRow.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -65,48 +60,43 @@ public class Window  {
             Dimension shortFieldSize = new Dimension(40, 25);
             Dimension nameFieldSize = new Dimension(100, 25);
 
-            this.labelName = new JLabel("Current Player");
-            this.textfieldName = new JTextField(15);
-            this.textfieldName.setMaximumSize(nameFieldSize);
-            this.textfieldName.setText(players.get(i).getName());
+            // Create new fields for each player row
+            JLabel labelName = new JLabel("Current Player");
+            JTextField textfieldName = new JTextField(15);
+            this.textfieldNames.add(textfieldName);
+            textfieldName.setMaximumSize(nameFieldSize);
+            textfieldName.setText(players.get(i).getName());
 
-            this.labelKey = new JLabel("Key count");
-            this.textfieldKey = new JTextField(15);
-            this.textfieldKey.setMaximumSize(shortFieldSize);
-            this.textfieldKey.setText(String.valueOf(players.get(i).getPlayerKey()));
+            JLabel labelKey = new JLabel("Key count");
+            JTextField textfieldKey = new JTextField(15);
+            this.textfieldKeys.add(textfieldKey);
+            textfieldKey.setMaximumSize(shortFieldSize);
+            textfieldKey.setText(String.valueOf(players.get(i).getPlayerKey()));
 
-            this.labelRemainActions = new JLabel("Remaining actions");
-            this.textFieldActions = new JTextField(15);
-            this.textFieldActions.setMaximumSize(shortFieldSize);
-            this.textFieldActions.setText(String.valueOf(players.get(i).getActionsRemaining()));
+            JLabel labelRemainActions = new JLabel("Remaining actions");
+            JTextField textFieldAction = new JTextField(15);
+            this.textFieldActions.add(textFieldAction);
+            textFieldAction.setMaximumSize(shortFieldSize);
+            textFieldAction.setText(String.valueOf(players.get(i).getActionsRemaining()));
 
-            this.labelArtefacts = new JLabel("Artefacts numbers: ");
-            this.textfieldArtefacts = new JTextField(15);
-            this.textfieldArtefacts.setMaximumSize(shortFieldSize);
-            this.textfieldArtefacts.setText(String.valueOf(players.get(i).getCountArteFacts()));
+            JLabel labelArtefacts = new JLabel("Artefacts numbers: ");
+            JTextField textfieldArtefact = new JTextField(15);
+            this.textfieldArtefacts.add(textfieldArtefact);
+            textfieldArtefact.setMaximumSize(shortFieldSize);
+            textfieldArtefact.setText(String.valueOf(players.get(i).getCountArteFacts()));
 
-            playerRow.add(this.labelName);
-            playerRow.add(this.textfieldName);
+            playerRow.add(labelName);
+            playerRow.add(textfieldName);
             playerInputPanel.add(Box.createVerticalStrut(10));
 
+            playerRow.add(labelKey);
+            playerRow.add(textfieldKey);
 
+            playerRow.add(labelRemainActions);
+            playerRow.add(textFieldAction);
 
-            playerRow.add(this.labelKey);
-            playerRow.add(this.textfieldKey);
-
-
-
-
-
-            playerRow.add(this.labelRemainActions);
-            playerRow.add(this.textFieldActions);
-
-
-
-
-
-            playerRow.add(this.labelArtefacts);
-            playerRow.add(this.textfieldArtefacts);
+            playerRow.add(labelArtefacts);
+            playerRow.add(textfieldArtefact);
             playerInputPanel.add(playerRow);
 
         }
@@ -124,53 +114,52 @@ public class Window  {
 
     }
 
-
-
-
-    public Buttons getButtons() {
-        return buttons;
-    }
-    public void setButtons(Buttons buttons) {
-        this.buttons = buttons;
+    public JFrame getFrame() {
+        return frame;
     }
 
-    public JTextField getTextFieldActions() {
-        return textFieldActions;
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
     }
-    public void setTextFieldActions(String actionCount) {
-        this.textFieldActions.setText(actionCount);
-    }
-
 
     public Grid getGrid() {
         return grid;
     }
+
     public void setGrid(Grid grid) {
         this.grid = grid;
     }
 
-
-    public JTextField getTextfieldName() {
-        return textfieldName;
-    }
-    public void setTextfieldName(String name) {
-        this.textfieldName.setText(name);
+    public Buttons getButtons() {
+        return buttons;
     }
 
-
-    public JTextField getTextfieldKey() {
-        return textfieldKey;
-    }
-    public void setTextfieldKey(String KeyCount) {
-        this.textfieldKey.setText(KeyCount);
+    public void setButtons(Buttons buttons) {
+        this.buttons = buttons;
     }
 
-
-    public void setLabelName(String name) {
-        this.labelName.setText(name);
-    }
     public JLabel getLabelName() {
         return labelName;
+    }
+
+    public void setLabelName(JLabel labelName) {
+        this.labelName = labelName;
+    }
+
+    public JLabel getLabelKey() {
+        return labelKey;
+    }
+
+    public void setLabelKey(JLabel labelKey) {
+        this.labelKey = labelKey;
+    }
+
+    public JLabel getLabelRemainActions() {
+        return labelRemainActions;
+    }
+
+    public void setLabelRemainActions(JLabel labelRemainActions) {
+        this.labelRemainActions = labelRemainActions;
     }
 
     public JLabel getLabelArtefacts() {
@@ -181,11 +170,23 @@ public class Window  {
         this.labelArtefacts = labelArtefacts;
     }
 
-    public JTextField getTextfieldArtefacts() {
+    public ArrayList<JTextField> getTextFieldActions() {
+        return textFieldActions;
+    }
+
+    public ArrayList<JTextField> getTextfieldNames() {
+        return textfieldNames;
+    }
+
+    public ArrayList<JTextField> getTextfieldKeys() {
+        return textfieldKeys;
+    }
+
+    public ArrayList<JTextField> getTextfieldArtefacts() {
         return textfieldArtefacts;
     }
 
-    public void setTextfieldArtefacts(String ArteCounts) {
-        this.textfieldArtefacts.setText(ArteCounts);
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 }
