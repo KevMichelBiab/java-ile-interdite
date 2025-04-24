@@ -23,7 +23,7 @@ public class Window  {
 
     protected Window(island plateau, ArrayList<Player> players){
         this.frame = new JFrame("ILE INTERDITE");
-        this.frame.setSize(2000,1500);
+        this.frame.setSize(500,500);
         this.frame.setLayout(new BorderLayout());
 
 

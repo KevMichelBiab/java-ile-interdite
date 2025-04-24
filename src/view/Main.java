@@ -17,6 +17,8 @@ public class Main {
         ctrl.setWindow(window);
         window.getGrid().addKeyListener(ctrl);
 
+        plat.printIsland();
+
 
 
 

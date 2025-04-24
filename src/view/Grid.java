@@ -51,7 +51,7 @@ public class Grid extends JPanel implements Observer{
 
 
 
-        Dimension dim = new Dimension(island.LARGEUR * TAILLE, island.HAUTEUR * TAILLE);
+        Dimension dim = new Dimension((island.LARGEUR) * TAILLE, (island.HAUTEUR) * TAILLE);
         this.setPreferredSize(dim);
 
 
@@ -74,10 +74,12 @@ public class Grid extends JPanel implements Observer{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         for(int i=0; i<island.LARGEUR; i++) {
-            for(int j=0; j<island.HAUTEUR; j++) {
-
+            for(int j=0; j<island.HAUTEUR ; j++) {
+                System.out.println("State at : "+ i + ", " + j + " : " + this.plateau.getGrid()[i][j].getState());
                 paint(g, this.plateau.getGrid()[i][j],i ,j );
+
             }
+
         }
         for(Player play: this.listOfPlayers) {
             drawPlayerNAme(g, play);
@@ -90,18 +92,32 @@ public class Grid extends JPanel implements Observer{
     }
 
     public void paint(Graphics g, zone c, int x, int y){
+        System.out.println("Current cell state: " + c.getState());
         if(c.getState() == ZoneState.NORMAL){
+
             g.setColor(Color.WHITE);
         }
         if(c.getState() == ZoneState.FLOODED){
+
             g.setColor(Color.GREEN);
         }
         if(c.getState() == ZoneState.SUNK){
+
             g.setColor(Color.BLACK);
         }
-        g.fillRect(x*TAILLE,y*TAILLE,TAILLE, TAILLE);
-        g.setColor(Color.BLUE); //Draw the borders of the grid
-        g.drawRect(x * TAILLE, y * TAILLE, TAILLE, TAILLE);
+        if(c instanceof ArtefactsZones){
+            g.setColor(Color.ORANGE);
+        }
+        if(c.getState() == ZoneState.HELICOPTER){
+
+            g.setColor(Color.MAGENTA);
+        }
+        System.out.println("Drawn cell as " + g.getColor());
+        System.out.println("X coordinate: " + x*TAILLE);
+        System.out.println("Y coordinate: " + y*TAILLE );
+        g.fillRect(y*TAILLE,x*TAILLE,TAILLE, TAILLE);
+        g.setColor(Color.BLUE);
+        g.drawRect(y * TAILLE, x * TAILLE, TAILLE, TAILLE);
 
 
 
@@ -129,8 +145,8 @@ public class Grid extends JPanel implements Observer{
         }
 
         // Calculate the position to center the name in the cell
-        int pixelX = play.getX() * Grid.TAILLE;
-        int pixelY = play.getY() * Grid.TAILLE;
+        int pixelX = (play.getX())* Grid.TAILLE;
+        int pixelY = (play.getY())* Grid.TAILLE;
         int centerX = pixelX + (TAILLE - nameWidth) / 2;
         int centerY = pixelY + (TAILLE + nameHeight) / 2 - metrics.getDescent();
 

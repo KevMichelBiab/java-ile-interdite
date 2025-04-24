@@ -1,5 +1,5 @@
 package model;
 
 public enum ZoneState {
-    NORMAL, FLOODED, SUNK;  // States for a zone
+    NORMAL, FLOODED, SUNK, HELICOPTER, ARTEFACTS;  // States for a zone
 }

@@ -7,27 +7,80 @@ import java.util.ArrayList;
 public class island extends Observable{
     private zone[][] grid;
 
-    public static final int HAUTEUR=40, LARGEUR=60;
+    public static final int HAUTEUR=5, LARGEUR=5;
 
-    public island(){
-        this.grid = new zone[LARGEUR+2][HAUTEUR+2];
-        for(int i=0; i<LARGEUR+2; i++){
-            for(int j=0; j<HAUTEUR+2; j++){
-                this.grid[i][j] = new zone();
+    public island() {
+        this.grid = new zone[LARGEUR][HAUTEUR];
+
+        // Generate the helicopter position
+        int helicoX = (int) (Math.random() * LARGEUR);
+        int helicoY = (int) (Math.random() * HAUTEUR);
+
+        //Artefacts
+        int artefact1X = (int) (Math.random() * LARGEUR);
+        int artefact1Y = (int) (Math.random() * HAUTEUR);
+
+        int artefact2X = (int) (Math.random() * LARGEUR);
+        int artefact2Y = (int) (Math.random() * HAUTEUR);
+
+        int artefact3X = (int) (Math.random() * LARGEUR);
+        int artefact3Y = (int) (Math.random() * HAUTEUR);
+
+        int artefact4X = (int) (Math.random() * LARGEUR);
+        int artefact4Y = (int) (Math.random() * HAUTEUR);
+
+
+
+        for (int i = 0; i < LARGEUR; i++) {
+            for (int j = 0; j < HAUTEUR; j++) {
+                if (i == helicoX && j == helicoY) {
+                    this.grid[i][j] = new helicopterZone();
+                }
+
+                if (i == artefact1X && j == artefact1Y) {
+                    System.out.println("Artefact 1 at: " + artefact1X + ", " + artefact1Y);
+                    this.grid[i][j] = new ArtefactsZones();
+                }
+
+                if (i == artefact2X && j == artefact2Y) {
+                    System.out.println("Artefact 2 at: " + artefact2X + ", " + artefact2Y);
+                    this.grid[i][j] = new ArtefactsZones();
+                }
+
+                if (i == artefact3X && j == artefact3Y) {
+                    System.out.println("Artefact 3 at: " + artefact3X + ", " + artefact3Y);
+                    this.grid[i][j] = new ArtefactsZones();
+                }
+
+                if (i == artefact4X && j == artefact4Y) {
+                    System.out.println("Artefact 4 at: " + artefact4X + ", " + artefact4Y);
+                    this.grid[i][j] = new ArtefactsZones();
+                }
+                if (this.grid[i][j] == null) {
+                    this.grid[i][j] = new zone();
+                }
+
+
 
             }
         }
-
+        notifyObservers();
 
 
     }
+
+
+
+
+
     public void printIsland() {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                System.out.print(grid[i][j].toString() + " ");  // Print each zone's state
+        for (int i = 0; i < LARGEUR; i++) {
+            for (int j = 0; j < HAUTEUR; j++) {
+                System.out.print(this.grid[i][j].toString() + "(" + i + "," + j + ")" +" ");  // Print each zone's state
             }
             System.out.println();  // New line after each row
         }
+
 
 
     }
@@ -35,8 +88,8 @@ public class island extends Observable{
     public void init() {
         int floodedCount = 0;
         while(floodedCount < 3) {
-            int randomI = (int)(Math.random() * LARGEUR);
-            int randomJ = (int)(Math.random() * HAUTEUR);
+            int randomI = (int)(Math.random() * (LARGEUR));
+            int randomJ = (int)(Math.random() * (HAUTEUR));
 
             // Only flood the zone if it's not already flooded
             if(this.grid[randomI][randomJ].getState() != ZoneState.FLOODED) {
@@ -106,8 +159,15 @@ public class island extends Observable{
         this.grid = grid;
     }
 
+    public static void main(String[] args) {
+        // Create a new island
+        island myIsland = new island();
 
 
+
+        // Print out the state of each zone in the island
+        myIsland.printIsland();
+    }
 
 
 }
