@@ -40,9 +40,38 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
 
     public void actionPerformed(ActionEvent e) {
+        System.out.println("Button Pressed");
+        /*System.out.println("Before List size: " + this.listPlayers.size());*/
+        if (this.listPlayers.size() == 0) return; // Ensure there are players
 
-        System.out.println("Button presseed!");
-        mod.init();
+        /*System.out.println("Value index: " + currentPlayerIndex);*/
+
+        Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
+        /*System.out.println("Current coordinates of player " + currentPlayerIndex + " (" + currentPlayer.getX() + currentPlayer.getY() + ")");
+        System.out.println("Button presseed!")*/
+        if(currentPlayer.getActionsRemaining() > 0){
+            this.mod.actionButtonFinDeTour(currentPlayer);
+            currentPlayer.decrementActions();
+            window.setTextfieldName(this.listPlayers.get(currentPlayerIndex).getName());
+            window.setTextfieldKey(String.valueOf(currentPlayer.getPlayerKey()));
+            window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
+
+
+            window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
+
+        }
+        if (currentPlayer.getActionsRemaining() == 0) {
+
+            currentPlayer.resetAction();
+            currentPlayerIndex = (currentPlayerIndex + 1) % listPlayers.size();
+            System.out.println("Switched to player: " + currentPlayerIndex);
+            currentPlayer = this.listPlayers.get(currentPlayerIndex);
+            window.setTextfieldName(this.listPlayers.get(currentPlayerIndex).getName());
+            window.setTextfieldKey(String.valueOf(currentPlayer.getPlayerKey()));
+            window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
+
+        }
+
     }
 
     @Override
@@ -66,7 +95,9 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
         Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
         System.out.println("Current coordinates of player " + currentPlayerIndex + " (" + currentPlayer.getX() + currentPlayer.getY() + ")");
-        window.setTextfield(this.listPlayers.get(currentPlayerIndex).getName());
+        window.setTextfieldName(this.listPlayers.get(currentPlayerIndex).getName());
+        window.setTextfieldKey(String.valueOf(currentPlayer.getPlayerKey()));
+        window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
         if (currentPlayer.getActionsRemaining() > 0) {
             int keyCode = e.getKeyCode();
 
@@ -99,23 +130,24 @@ public class control implements ActionListener, KeyListener, DocumentListener {
                 case KeyEvent.VK_Z:
                     this.mod.assechement(Direction.direction.BACK,currentPlayer);
                     break;
+
             }
             currentPlayer.decrementActions();
-            System.out.println("Remaining actions: " + currentPlayer.getActionsRemaining());
-            System.out.println("Player " + this.listPlayers.get(currentPlayerIndex).getName() + ": (" + currentPlayer.getX() + ", " + currentPlayer.getY() + ")");
+            window.setTextfieldName(this.listPlayers.get(currentPlayerIndex).getName());
+            window.setTextfieldKey(String.valueOf(currentPlayer.getPlayerKey()));
+            window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
+
 
             if (currentPlayer.getActionsRemaining() == 0) {
                 this.mod.init();
 
                 currentPlayer.resetAction();
-
-
-                if (window != null) {
-                    window.setTextfield(this.listPlayers.get(currentPlayerIndex).getName());
-                }
                 currentPlayerIndex = (currentPlayerIndex + 1) % listPlayers.size();
                 System.out.println("Switched to player: " + currentPlayerIndex);
-
+                currentPlayer = this.listPlayers.get(currentPlayerIndex);
+                window.setTextfieldName(this.listPlayers.get(currentPlayerIndex).getName());
+                window.setTextfieldKey(String.valueOf(currentPlayer.getPlayerKey()));
+                window.setTextFieldActions(String.valueOf(currentPlayer.getActionsRemaining()));
 
             }
         }

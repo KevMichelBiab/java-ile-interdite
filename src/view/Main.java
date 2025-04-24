@@ -16,8 +16,9 @@ public class Main {
         control ctrl = new control(plat, players);
         ctrl.setWindow(window);
         window.getGrid().addKeyListener(ctrl);
+        window.getButtons().getFinDeTour().addActionListener(ctrl);
 
-        plat.printIsland();
+        /*plat.printIsland();*/
 
 
 

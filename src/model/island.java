@@ -7,7 +7,9 @@ import java.util.ArrayList;
 public class island extends Observable{
     private zone[][] grid;
 
-    public static final int HAUTEUR=5, LARGEUR=5;
+
+
+    public static final int HAUTEUR=20, LARGEUR=20;
 
     public island() {
         this.grid = new zone[LARGEUR][HAUTEUR];
@@ -28,7 +30,6 @@ public class island extends Observable{
 
         int artefact4X = (int) (Math.random() * LARGEUR);
         int artefact4Y = (int) (Math.random() * HAUTEUR);
-
 
 
         for (int i = 0; i < LARGEUR; i++) {
@@ -59,18 +60,10 @@ public class island extends Observable{
                 if (this.grid[i][j] == null) {
                     this.grid[i][j] = new zone();
                 }
-
-
-
             }
         }
         notifyObservers();
-
-
     }
-
-
-
 
 
     public void printIsland() {
@@ -81,11 +74,10 @@ public class island extends Observable{
             System.out.println();  // New line after each row
         }
 
-
-
     }
 
     public void init() {
+
         int floodedCount = 0;
         while(floodedCount < 3) {
             int randomI = (int)(Math.random() * (LARGEUR));
@@ -98,9 +90,16 @@ public class island extends Observable{
                 floodedCount++;
             }
         }
+
         notifyObservers();
+    }
 
-
+    public void actionButtonFinDeTour(Player p){
+        if(Math.random() > 0.8){
+            this.init();
+        } else {
+            this.generateKey(p);
+        }
     }
 
     public void assechement(Direction.direction whereToGo, Player p){
@@ -146,7 +145,6 @@ public class island extends Observable{
                     }
                 }
         }
-
         notifyObservers();
     }
 
@@ -157,6 +155,10 @@ public class island extends Observable{
 
     public void setGrid(zone[][] grid) {
         this.grid = grid;
+    }
+    public void generateKey(Player p){
+        System.out.println("Key added!");
+        p.setPlayerKey(p.getPlayerKey() + 1);
     }
 
     public static void main(String[] args) {
