@@ -230,6 +230,7 @@ public class island extends Observable{
             if(p.getPlayerKey() > 0) {
                 zoneChecked.setState(ZoneState.NORMAL);
                 p.setCountArteFacts(p.getCountArteFacts() + 1);
+                p.setPlayerKey(p.getPlayerKey()-1);
             }
         }
         notifyObservers();

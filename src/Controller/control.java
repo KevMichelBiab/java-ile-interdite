@@ -15,6 +15,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
     private  int currentPlayerIndex = 0;
 
     private view.Window window;
+    private boolean gameOver = false;
 
 
 
@@ -40,24 +41,25 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
 
     public void actionPerformed(ActionEvent e) {
+        if(gameOver) return;
 
         /*System.out.println("Before List size: " + this.listPlayers.size());*/
         if (this.listPlayers.size() == 0) return; // Ensure there are players
+        Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
 
         /*System.out.println("Value index: " + currentPlayerIndex);*/
         if (mod.lostHelicop()) {
             System.out.println("Button Pressed");
-            window.getButtons().getPartyWon().setBackground(Color.BLACK);
-            window.getButtons().getPartyWon().setForeground(Color.WHITE); // optional: make text visible
-            window.getButtons().getPartyWon().setText("Helicopter Lost!");
+            updatePartyButton();
             return;
         }
-
-        Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
         if(e.getSource() != window.getButtons().getPartyWon()) {
+
             if (this.mod.ifPlayerOnHelicop(currentPlayer)) {
                 currentPlayer.setOnHelicopter(true);
                 currentPlayer.setActionsRemaining(0);
+                currentPlayer.setPlayerKey(0);
+                currentPlayer.setCountArteFacts(0);
                 updatePlayerInfo(currentPlayer);
                 switchToNextPlayerNotOnHelicopter();
                 return;
@@ -66,8 +68,10 @@ public class control implements ActionListener, KeyListener, DocumentListener {
             if(this.mod.isDead(currentPlayer)){
                 currentPlayer.setPlayerDead(true);
                 currentPlayer.setActionsRemaining(0);
+                currentPlayer.setPlayerKey(0);
+                currentPlayer.setCountArteFacts(0);
                 updatePlayerInfo(currentPlayer);
-                switchToNextPlayerNotOnHelicopter();
+                updatePartyButton();
                 return;
             }
         /*System.out.println("Current coordinates of player " + currentPlayerIndex + " (" + currentPlayer.getX() + currentPlayer.getY() + ")");
@@ -79,21 +83,13 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
             }
             if (currentPlayer.getActionsRemaining() == 0) {
-
                 currentPlayer.resetAction();
                 switchToNextPlayerNotOnHelicopter();
-
             }
         }
         if(e.getSource() == window.getButtons().getPartyWon()){
-            if(winningParty()){
-                window.getButtons().getPartyWon().setBackground(Color.BLUE);
-            } else {
-                window.getButtons().getPartyWon().setBackground(Color.RED);
-            }
-            if(lostParty()){
-                window.getButtons().getPartyWon().setBackground(Color.BLACK);
-            }
+            updatePartyButton();
+            return;
 
         }
 
@@ -113,34 +109,44 @@ public class control implements ActionListener, KeyListener, DocumentListener {
      * -Do the same */
     @Override
     public void keyPressed(KeyEvent e) {
+        if(gameOver) return;
         System.out.println("Before List size: " + this.listPlayers.size());
         if (this.listPlayers.size() == 0) return; // Ensure there are players
+        Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
 
         System.out.println("Value index: " + currentPlayerIndex);
+
         if (mod.lostHelicop()) {
             System.out.println("Button Pressed");
-            window.getButtons().getPartyWon().setBackground(Color.BLACK);
-            window.getButtons().getPartyWon().setForeground(Color.WHITE); // optional: make text visible
-            window.getButtons().getPartyWon().setText("Helicopter Lost!");
+            updatePartyButton();
             return;
-        }
-
-        Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
-        if(this.mod.ifPlayerOnHelicop(currentPlayer)){
-            currentPlayer.setOnHelicopter(true);
-            currentPlayer.setActionsRemaining(0);
-            updatePlayerInfo(currentPlayer);
-            switchToNextPlayerNotOnHelicopter();
-            return;
-
         }
         if(this.mod.isDead(currentPlayer)){
             currentPlayer.setPlayerDead(true);
             currentPlayer.setActionsRemaining(0);
+            currentPlayer.setPlayerKey(0);
+            currentPlayer.setCountArteFacts(0);
+            updatePlayerInfo(currentPlayer);
+            updatePartyButton();
+            return;
+        }
+
+
+        if (currentPlayer.isPlayerDead()) {
+            System.out.println("Dead player skipped");
+            switchToNextPlayerNotOnHelicopter();
+            return;
+        }
+        if (this.mod.ifPlayerOnHelicop(currentPlayer)) {
+            currentPlayer.setOnHelicopter(true);
+            currentPlayer.setActionsRemaining(0);
+            currentPlayer.setPlayerKey(0);
+            currentPlayer.setCountArteFacts(0);
             updatePlayerInfo(currentPlayer);
             switchToNextPlayerNotOnHelicopter();
             return;
         }
+
 
 
         if (currentPlayer.getActionsRemaining() > 0) {
@@ -199,6 +205,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
                 switchToNextPlayerNotOnHelicopter();
 
             }
+
         }
 
     }
@@ -224,6 +231,24 @@ public class control implements ActionListener, KeyListener, DocumentListener {
     public void changedUpdate(DocumentEvent e) {
 
     }
+    public void updatePartyButton(){
+        if(winningParty()){
+            gameOver = true;
+            window.getButtons().getPartyWon().setBackground(Color.BLUE);
+            window.getButtons().getPartyWon().setForeground(Color.WHITE); // optional: make text visible
+            window.getButtons().getPartyWon().setText("Party Won");
+
+        }
+        if(lostParty()){
+            gameOver = true;
+            window.getButtons().getPartyWon().setBackground(Color.BLACK);
+            window.getButtons().getPartyWon().setForeground(Color.WHITE); // optional: make text visible
+            window.getButtons().getPartyWon().setText("Party Lost");
+
+
+
+        }
+    }
 
     public boolean winningParty(){
         int count = 0;
@@ -236,17 +261,18 @@ public class control implements ActionListener, KeyListener, DocumentListener {
         }
         return (count == 4) && onHelicop;
     }
-    public boolean allPlayerDead(){
+    public boolean ifPlayerDead(){
         int howManyDead = 0;
         for(Player p : this.listPlayers){
             if(p.isPlayerDead()){
+                System.out.println("Player status: " + p.isPlayerDead());
                 howManyDead++;
             }
         }
-        return howManyDead == this.listPlayers.size();
+        return howManyDead >= 1;
     }
     public boolean lostParty(){
-        return allPlayerDead() || this.mod.lostHelicop();
+        return ifPlayerDead() || this.mod.lostHelicop();
     }
 
     private void updatePlayerInfo(Player player) {
@@ -283,7 +309,8 @@ public class control implements ActionListener, KeyListener, DocumentListener {
             currentPlayerIndex = (currentPlayerIndex + 1) % listPlayers.size();
             attempts++;
 
-        } while (listPlayers.get(currentPlayerIndex).isOnHelicopter() && attempts < listPlayers.size() && this.mod.lostHelicop());
+        } while ((listPlayers.get(currentPlayerIndex).isOnHelicopter() || listPlayers.get(currentPlayerIndex).isPlayerDead())
+                && attempts < listPlayers.size());
 
         Player nextPlayer = listPlayers.get(currentPlayerIndex);
         updatePlayerInfo(nextPlayer);
