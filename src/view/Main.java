@@ -18,6 +18,7 @@ public class Main {
         window.getGrid().addKeyListener(ctrl);
         window.getButtons().getFinDeTour().addActionListener(ctrl);
         window.getButtons().getPartyWon().addActionListener(ctrl);
+        window.getButtons().getKeyExchange().addActionListener(ctrl);
 
         /*plat.printIsland();*/
 

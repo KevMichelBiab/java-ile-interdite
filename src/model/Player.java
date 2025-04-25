@@ -79,6 +79,12 @@ public class Player extends Observable{
         this.actionsRemaining = 3;
     }
 
+    public void decrementKeys(){
+        if(this.playerKey > 0){
+            this.playerKey--;
+        }
+    }
+
     public int getX() {
         return x;
     }

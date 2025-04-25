@@ -53,7 +53,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
             updatePartyButton();
             return;
         }
-        if(e.getSource() != window.getButtons().getPartyWon()) {
+        if(e.getSource() == window.getButtons().getFinDeTour()) {
 
             if (this.mod.ifPlayerOnHelicop(currentPlayer)) {
                 currentPlayer.setOnHelicopter(true);
@@ -90,6 +90,18 @@ public class control implements ActionListener, KeyListener, DocumentListener {
         if(e.getSource() == window.getButtons().getPartyWon()){
             updatePartyButton();
             return;
+
+        }
+        if(e.getSource() == window.getButtons().getKeyExchange()){
+            Player updated = this.mod.exchangeKeys(this.listPlayers, currentPlayer);
+            updatePlayerInfo(currentPlayer);
+            window.getTextfieldNames().get(this.listPlayers.indexOf(updated)).setText(updated.getName());
+            window.getTextfieldKeys().get(this.listPlayers.indexOf(updated)).setText(String.valueOf(updated.getPlayerKey()));
+            updated.setActionsRemaining(0);
+            window.getTextFieldActions().get(this.listPlayers.indexOf(updated)).setText("0");
+            updated.resetAction();
+
+
 
         }
 
@@ -237,17 +249,17 @@ public class control implements ActionListener, KeyListener, DocumentListener {
             window.getButtons().getPartyWon().setBackground(Color.BLUE);
             window.getButtons().getPartyWon().setForeground(Color.WHITE); // optional: make text visible
             window.getButtons().getPartyWon().setText("Party Won");
-
         }
         if(lostParty()){
             gameOver = true;
             window.getButtons().getPartyWon().setBackground(Color.BLACK);
             window.getButtons().getPartyWon().setForeground(Color.WHITE); // optional: make text visible
             window.getButtons().getPartyWon().setText("Party Lost");
-
-
-
         }
+        window.getButtons().getPartyWon().setBackground(Color.RED);
+    }
+    public void updateKeyExchangeButton(){
+
     }
 
     public boolean winningParty(){

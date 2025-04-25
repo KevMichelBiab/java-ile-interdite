@@ -27,7 +27,7 @@ public class Window  {
     protected Window(island plateau, ArrayList<Player> players){
 
         this.frame = new JFrame("ILE INTERDITE");
-        this.frame.setSize(2000,700);
+        this.frame.setSize(2000,650);
         this.frame.setLayout(new BorderLayout());
 
 
@@ -38,20 +38,26 @@ public class Window  {
         gameSettings.setLayout(new BoxLayout(gameSettings, BoxLayout.Y_AXIS));
         //gameSettings.setBackground(Color.CYAN);
 
-        JPanel buttonSection = new JPanel();
+        /*JPanel buttonSection = new JPanel();
         buttonSection.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
-        //buttonSection.setBackground(Color.PINK);
+        buttonSection.setBackground(Color.PINK);*/
+
+
         this.buttons = new Buttons(plateau,grid);
-        buttonSection.add(this.buttons);
-        gameSettings.add(buttonSection);
+
+        this.buttons.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        //this.buttons.setBackground(Color.PINK);
+
+
+        gameSettings.add(this.buttons);
 
 
 
         JPanel playerInputPanel = new JPanel();
-        playerInputPanel.setPreferredSize(new Dimension(1000, 1000));
+        playerInputPanel.setPreferredSize(new Dimension(1000, 600));
 
         playerInputPanel.setLayout(new BoxLayout(playerInputPanel, BoxLayout.Y_AXIS));
-       // playerInputPanel.setBackground(Color.LIGHT_GRAY);
+
         for(int i = 0; i< players.size(); i++) {
             JPanel playerRow = new JPanel();
             playerRow.setLayout(new BoxLayout(playerRow, BoxLayout.X_AXIS));
@@ -101,7 +107,7 @@ public class Window  {
 
         }
 
-       // playerInputPanel.setBackground(Color.GREEN);
+       //playerInputPanel.setBackground(Color.GREEN);
         gameSettings.add(playerInputPanel);
        //gameSettings.setBackground(Color.YELLOW);
 

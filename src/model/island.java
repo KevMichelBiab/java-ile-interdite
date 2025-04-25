@@ -146,6 +146,30 @@ public class island extends Observable{
 
         notifyObservers();
     }
+
+    public Player exchangeKeys(ArrayList<Player> listPlayers, Player p){
+        Player otherPlayer = null;
+        for(int i=0; i<listPlayers.size(); i++){
+            if(listPlayers.get(i) == p){
+                continue;
+            }
+            otherPlayer = listPlayers.get(i);
+            if(p.getPlayerKey() > 0) {
+                if (this.grid[p.getX()][p.getY()] == this.grid[otherPlayer.getX()][otherPlayer.getY()]) {
+                    otherPlayer.setPlayerKey(otherPlayer.getPlayerKey() + p.getPlayerKey());
+                    p.decrementKeys();
+                    System.out.println("Keys exchanged!");
+
+                }
+            }
+        }
+        if (otherPlayer != null) {
+            System.out.println(otherPlayer.getName() + " keys: " + otherPlayer.getPlayerKey());
+            return otherPlayer;
+        }
+        System.out.println("Current player Keys : " + p.getPlayerKey());
+        return p;
+    }
     public void floodPlayer(Player p){
         if(this.grid[p.getX()][p.getY()].getState() == ZoneState.NORMAL) {
 
@@ -171,7 +195,7 @@ public class island extends Observable{
 
 
     public void actionButtonFinDeTour(Player p){
-        if(Math.random() > 0.2){
+        if(Math.random() < 0.2){
             this.floodPlayer(p);
         } else {
             this.generateKey(p);
