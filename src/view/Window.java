@@ -2,6 +2,7 @@ package view;
 import model.*;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -154,6 +155,8 @@ public class Window {
 
             grid.requestFocusInWindow();
 
+            playBackgroundMusic();
+
 
         }
 
@@ -232,6 +235,23 @@ public class Window {
 
         public ArrayList<Player> getPlayers () {
             return players;
+        }
+
+        public void playBackgroundMusic() {
+            new Thread(() -> {
+                try {
+                    File musicFile = new File("src/view/Mystery-Bazaar.wav");
+                    AudioInputStream  audioStream = AudioSystem.getAudioInputStream(musicFile);
+
+                    Clip clip = AudioSystem.getClip();
+                    clip.open(audioStream);
+
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e){
+                    e.printStackTrace();
+                }
+            }).start();
         }
 
 

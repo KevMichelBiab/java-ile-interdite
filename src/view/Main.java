@@ -23,10 +23,5 @@ public class Main {
         /*plat.printIsland();*/
 
 
-
-
-
-
-
     }
 }
