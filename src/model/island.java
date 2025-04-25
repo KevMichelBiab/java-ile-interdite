@@ -157,16 +157,19 @@ public class island extends Observable{
             if(p.getPlayerKey() > 0) {
                 if (this.grid[p.getX()][p.getY()] == this.grid[otherPlayer.getX()][otherPlayer.getY()]) {
                     otherPlayer.setPlayerKey(otherPlayer.getPlayerKey() + p.getPlayerKey());
+                    System.out.println(otherPlayer.getName() + " Keys right after the update: " + otherPlayer.getPlayerKey());
                     p.decrementKeys();
                     System.out.println("Keys exchanged!");
+                    System.out.println(otherPlayer.getName() + " keys: " + otherPlayer.getPlayerKey());
+                    return otherPlayer;
 
                 }
+
+
             }
         }
-        if (otherPlayer != null) {
-            System.out.println(otherPlayer.getName() + " keys: " + otherPlayer.getPlayerKey());
-            return otherPlayer;
-        }
+
+
         System.out.println("Current player Keys : " + p.getPlayerKey());
         return p;
     }

@@ -38,23 +38,18 @@ public class control implements ActionListener, KeyListener, DocumentListener {
     }
 
 
+    public void handleButton(ActionEvent e, Player currentPlayer){
+        if(e.getSource() == window.getButtons().getFinDeTour()){
+            handleFindeDeTour(currentPlayer);
+        } else if (e.getSource() == window.getButtons().getPartyWon()){
+            handlePartyWon(currentPlayer);
 
-
-    public void actionPerformed(ActionEvent e) {
-        if(gameOver) return;
-
-        /*System.out.println("Before List size: " + this.listPlayers.size());*/
-        if (this.listPlayers.size() == 0) return; // Ensure there are players
-        Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
-
-        /*System.out.println("Value index: " + currentPlayerIndex);*/
-        if (mod.lostHelicop()) {
-            System.out.println("Button Pressed");
-            updatePartyButton();
-            return;
+        } else if( e.getSource() == window.getButtons().getKeyExchange()){
+            handleKeyExcahnge(currentPlayer);
         }
-        if(e.getSource() == window.getButtons().getFinDeTour()) {
-
+    }
+    public void handleFindeDeTour(Player p){
+            Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
             if (this.mod.ifPlayerOnHelicop(currentPlayer)) {
                 currentPlayer.setOnHelicopter(true);
                 currentPlayer.setActionsRemaining(0);
@@ -74,8 +69,8 @@ public class control implements ActionListener, KeyListener, DocumentListener {
                 updatePartyButton();
                 return;
             }
-        /*System.out.println("Current coordinates of player " + currentPlayerIndex + " (" + currentPlayer.getX() + currentPlayer.getY() + ")");
-        System.out.println("Button presseed!")*/
+            System.out.println("Current coordinates of player " + currentPlayerIndex + " (" + currentPlayer.getX() + currentPlayer.getY() + ")");
+            System.out.println("Button presseed!");
             if (currentPlayer.getActionsRemaining() > 0) {
                 this.mod.actionButtonFinDeTour(currentPlayer);
                 currentPlayer.decrementActions();
@@ -86,24 +81,39 @@ public class control implements ActionListener, KeyListener, DocumentListener {
                 currentPlayer.resetAction();
                 switchToNextPlayerNotOnHelicopter();
             }
-        }
-        if(e.getSource() == window.getButtons().getPartyWon()){
+
+    }
+    public void handlePartyWon(Player p){
+        Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
+        updatePartyButton();
+        return;
+    }
+    public void handleKeyExcahnge( Player p){
+        Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
+        Player updated = this.mod.exchangeKeys(this.listPlayers, currentPlayer);
+        updatePlayerInfo(currentPlayer);
+        window.getTextfieldNames().get(this.listPlayers.indexOf(updated)).setText(updated.getName());
+        window.getTextfieldKeys().get(this.listPlayers.indexOf(updated)).setText(String.valueOf(updated.getPlayerKey()));
+        updated.setActionsRemaining(0);
+        window.getTextFieldActions().get(this.listPlayers.indexOf(updated)).setText("0");
+        updated.resetAction();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if(gameOver) return;
+
+        /*System.out.println("Before List size: " + this.listPlayers.size());*/
+        if (this.listPlayers.size() == 0) return; // Ensure there are players
+        Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
+
+        /*System.out.println("Value index: " + currentPlayerIndex);*/
+        if (mod.lostHelicop()) {
+            System.out.println("Button Pressed");
             updatePartyButton();
             return;
-
         }
-        if(e.getSource() == window.getButtons().getKeyExchange()){
-            Player updated = this.mod.exchangeKeys(this.listPlayers, currentPlayer);
-            updatePlayerInfo(currentPlayer);
-            window.getTextfieldNames().get(this.listPlayers.indexOf(updated)).setText(updated.getName());
-            window.getTextfieldKeys().get(this.listPlayers.indexOf(updated)).setText(String.valueOf(updated.getPlayerKey()));
-            updated.setActionsRemaining(0);
-            window.getTextFieldActions().get(this.listPlayers.indexOf(updated)).setText("0");
-            updated.resetAction();
+        handleButton(e,currentPlayer);
 
-
-
-        }
 
     }
 
@@ -111,14 +121,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
     public void keyTyped(KeyEvent e) {
 
     }
-    /*Pour le moment, je vais utiliser maxActionMoves pour savoir le nombre total d'actions que je peux realiser*/
 
-    /* How it should be for different players
-     * -Get into the list of players
-     * -Target the first player
-     * -Update his move up to 3
-     * -Go to the next
-     * -Do the same */
     @Override
     public void keyPressed(KeyEvent e) {
         if(gameOver) return;
@@ -258,9 +261,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
         }
         window.getButtons().getPartyWon().setBackground(Color.RED);
     }
-    public void updateKeyExchangeButton(){
 
-    }
 
     public boolean winningParty(){
         int count = 0;
@@ -305,16 +306,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
         window.getTextfieldArtefacts().get(this.listPlayers.indexOf(player)).setText(String.valueOf(player.getCountArteFacts()));
 
     }
-    private void switchPlayer() {
-        if(this.listPlayers.size() == 1){
-            return;
-        } else {
-            currentPlayerIndex = (currentPlayerIndex + 1) % listPlayers.size();
-            System.out.println("Switched to player: " + currentPlayerIndex);
-            Player currentPlayer = listPlayers.get(currentPlayerIndex);
-            updatePlayerInfo(currentPlayer);
-        }
-    }
+
     private void switchToNextPlayerNotOnHelicopter() {
         int attempts = 0; // Just to prevent infinite loop
         do {
