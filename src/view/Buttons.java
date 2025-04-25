@@ -42,19 +42,15 @@ public class Buttons extends JPanel implements Observer{
         this.keyExchange.setPreferredSize(new Dimension(200,40));
 
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));  // Align left with spacing
-        buttonPanel.add(finDeTour);
-        buttonPanel.add(keyExchange);
-        buttonPanel.add(partyWon);
+
+        this.setPreferredSize(new Dimension(650, 20));
+        // Align left with spacing
+        this.add(finDeTour);
+        this.add(keyExchange);
+        this.add(partyWon);
 
 
-        JPanel spacerPanel = new JPanel();
-        spacerPanel.setPreferredSize(new Dimension(100, 0));
 
-        this.setLayout(new BorderLayout());
-        this.add(spacerPanel, BorderLayout.WEST);
-        this.add(buttonPanel, BorderLayout.CENTER);
 
 
 

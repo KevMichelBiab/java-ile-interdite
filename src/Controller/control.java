@@ -124,6 +124,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        System.out.println("Key pressed");
         if(gameOver) return;
         if (this.listPlayers.isEmpty()) return; // Ensure there are players
         Player currentPlayer = this.listPlayers.get(currentPlayerIndex);

@@ -1,10 +1,15 @@
 package view;
 import model.*;
 import Controller.*;
+
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -15,6 +20,7 @@ public class Grid extends JPanel implements Observer{
     public final static int TAILLE = 30;
 
     private ArrayList<Player> listOfPlayers;
+    private Image backgroundImage;
 
 
 
@@ -42,10 +48,14 @@ public class Grid extends JPanel implements Observer{
             play.addObserver(this);
         }
 
+
         Dimension dim = new Dimension((island.LARGEUR) * TAILLE, (island.HAUTEUR) * TAILLE);
         this.setPreferredSize(dim);
-        setFocusable(true);
+
+
     }
+
+
 
     @Override
     public void update() {
@@ -56,7 +66,7 @@ public class Grid extends JPanel implements Observer{
 
 
     public void paintComponent(Graphics g){
-        super.paintComponent(g);
+
         for(int i=0; i<island.LARGEUR; i++) {
             for(int j=0; j<island.HAUTEUR ; j++) {
                 /*System.out.println("State at : "+ i + ", " + j + " : " + this.plateau.getGrid()[i][j].getState());*/
@@ -70,21 +80,24 @@ public class Grid extends JPanel implements Observer{
 
     public void paint(Graphics g, zone c, int x, int y){
         /*System.out.println("Current cell state: " + c.getState());*/
+        Color cellColor = new Color(255,255,255,0);
         if(c.getState() == ZoneState.NORMAL){
-            g.setColor(Color.WHITE);
+            cellColor = new Color(255,255,255,0);
         }
         if(c.getState() == ZoneState.FLOODED){
-            g.setColor(Color.GREEN);
+            cellColor = Color.GREEN;
         }
         if(c.getState() == ZoneState.SUNK){
-            g.setColor(Color.BLACK);
+            cellColor = Color.BLACK;
         }
         if(c.getState() == ZoneState.ARTEFACTS){
-            g.setColor(Color.ORANGE);
+            cellColor = Color.ORANGE;
         }
         if(c.getState() == ZoneState.HELICOPTER){
-            g.setColor(Color.MAGENTA);
+            cellColor = Color.MAGENTA;
         }
+
+        g.setColor(cellColor);
         /*ystem.out.println("Drawn cell as " + g.getColor());
         System.out.println("X coordinate: " + x*TAILLE);
         System.out.println("Y coordinate: " + y*TAILLE );*/
