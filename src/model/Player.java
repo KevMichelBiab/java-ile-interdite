@@ -13,6 +13,8 @@ public class Player extends Observable{
     private int playerKey;
     private int actionsRemaining;
     private int CountArteFacts;
+    private boolean onHelicopter = false;
+    public boolean isPlayerDead = false;
 
 
     public Player(String name){
@@ -50,6 +52,22 @@ public class Player extends Observable{
 
     public int getActionsRemaining() {
         return actionsRemaining;
+    }
+
+    public boolean isOnHelicopter() {
+        return onHelicopter;
+    }
+
+    public void setOnHelicopter(boolean onHelicopter) {
+        this.onHelicopter = onHelicopter;
+    }
+
+    public boolean isPlayerDead() {
+        return isPlayerDead;
+    }
+
+    public void setPlayerDead(boolean playerDead) {
+        isPlayerDead = playerDead;
     }
 
     public void decrementActions() {

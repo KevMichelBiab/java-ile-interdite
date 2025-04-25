@@ -62,25 +62,25 @@ public class Window  {
 
             // Create new fields for each player row
             JLabel labelName = new JLabel("Current Player");
-            JTextField textfieldName = new JTextField(15);
+            JTextField textfieldName = new JTextField(50);
             this.textfieldNames.add(textfieldName);
             textfieldName.setMaximumSize(nameFieldSize);
             textfieldName.setText(players.get(i).getName());
 
             JLabel labelKey = new JLabel("Key count");
-            JTextField textfieldKey = new JTextField(15);
+            JTextField textfieldKey = new JTextField(50);
             this.textfieldKeys.add(textfieldKey);
             textfieldKey.setMaximumSize(shortFieldSize);
             textfieldKey.setText(String.valueOf(players.get(i).getPlayerKey()));
 
             JLabel labelRemainActions = new JLabel("Remaining actions");
-            JTextField textFieldAction = new JTextField(15);
+            JTextField textFieldAction = new JTextField(50);
             this.textFieldActions.add(textFieldAction);
             textFieldAction.setMaximumSize(shortFieldSize);
             textFieldAction.setText(String.valueOf(players.get(i).getActionsRemaining()));
 
             JLabel labelArtefacts = new JLabel("Artefacts numbers: ");
-            JTextField textfieldArtefact = new JTextField(15);
+            JTextField textfieldArtefact = new JTextField(50);
             this.textfieldArtefacts.add(textfieldArtefact);
             textfieldArtefact.setMaximumSize(shortFieldSize);
             textfieldArtefact.setText(String.valueOf(players.get(i).getCountArteFacts()));

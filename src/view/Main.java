@@ -17,6 +17,7 @@ public class Main {
         ctrl.setWindow(window);
         window.getGrid().addKeyListener(ctrl);
         window.getButtons().getFinDeTour().addActionListener(ctrl);
+        window.getButtons().getPartyWon().addActionListener(ctrl);
 
         /*plat.printIsland();*/
 
