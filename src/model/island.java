@@ -138,29 +138,33 @@ public class island extends Observable{
                 this.grid[randomI][randomJ].setState(ZoneState.FLOODED);
                 System.out.println(" " + randomI + ":" + randomJ + " are " + this.grid[randomI][randomJ].getState());
                 floodedCount++;
+            } else if (this.grid[randomI][randomJ].getState() == ZoneState.FLOODED){
+                this.grid[randomI][randomJ].setState(ZoneState.SUNK);
+                System.out.println(" " + randomI + ":" + randomJ + " are " + this.grid[randomI][randomJ].getState());
             }
         }
 
         notifyObservers();
     }
     public void floodPlayer(Player p){
-        /*if(this.grid[p.getX()][p.getY()].getState() == ZoneState.NORMAL) {
+        if(this.grid[p.getX()][p.getY()].getState() == ZoneState.NORMAL) {
+
             System.out.println("Player flooded!");
             this.grid[p.getX()][p.getY()].setState(ZoneState.FLOODED);
             notifyObservers();
         }else if(this.grid[p.getX()][p.getY()].getState() == ZoneState.FLOODED){
             System.out.println("Player sunk!");
             this.grid[p.getX()][p.getY()].setState(ZoneState.SUNK);
-        } else {
-            System.out.println("Player already sunk!");
-        }*/
+        }
+
+        /*A test for to see if helicop actually triggers the end of the game
         for(int i=0; i<LARGEUR; i++){
             for(int j=0; j<HAUTEUR; j++){
                 if(this.grid[i][j].getState() == ZoneState.HELICOPTER){
                     this.grid[i][j].setState(ZoneState.SUNK);
                 }
             }
-        }
+        }*/
         notifyObservers();
     }
 
@@ -223,8 +227,10 @@ public class island extends Observable{
     public void recupArtefacts(Player p){
         zone zoneChecked = this.grid[p.getX()][p.getY()];
         if(zoneChecked.getState() == ZoneState.ARTEFACTS){
-            zoneChecked.setState(ZoneState.NORMAL);
-            p.setCountArteFacts(p.getCountArteFacts() + 1);
+            if(p.getPlayerKey() > 0) {
+                zoneChecked.setState(ZoneState.NORMAL);
+                p.setCountArteFacts(p.getCountArteFacts() + 1);
+            }
         }
         notifyObservers();
     }
