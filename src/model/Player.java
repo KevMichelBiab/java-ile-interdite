@@ -134,7 +134,7 @@ public class Player extends Observable{
     */
 
     public boolean isInBounds(){
-        return (this.x >= 0 && this.x < island.LARGEUR) && (this.y >= 0 && this.y < island.HAUTEUR);
+        return (this.x >= 0 && this.x < island.HAUTEUR) && (this.y >= 0 && this.y < island.LARGEUR);
     }
 
 

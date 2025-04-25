@@ -32,7 +32,7 @@ public class Window  {
 
 
         this.grid = new Grid(plateau,players);
-        System.out.println(this.grid.getListOfPlayers().size());
+
 
         JPanel gameSettings = new JPanel();
         gameSettings.setLayout(new BoxLayout(gameSettings, BoxLayout.Y_AXIS));
@@ -44,13 +44,9 @@ public class Window  {
 
 
         this.buttons = new Buttons(plateau,grid);
-
         this.buttons.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         //this.buttons.setBackground(Color.PINK);
-
-
         gameSettings.add(this.buttons);
-
 
 
         JPanel playerInputPanel = new JPanel();
@@ -61,7 +57,7 @@ public class Window  {
         for(int i = 0; i< players.size(); i++) {
             JPanel playerRow = new JPanel();
             playerRow.setLayout(new BoxLayout(playerRow, BoxLayout.X_AXIS));
-            playerRow.setAlignmentX(Component.LEFT_ALIGNMENT);
+            playerRow.setAlignmentX(Component.LEFT_ALIGNMENT); // Fais en sorte que les textfields et labels commencent a etre genere a gauch de gamesettings
 
             Dimension shortFieldSize = new Dimension(40, 25);
             Dimension nameFieldSize = new Dimension(100, 25);

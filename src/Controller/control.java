@@ -125,14 +125,11 @@ public class control implements ActionListener, KeyListener, DocumentListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if(gameOver) return;
-        System.out.println("Before List size: " + this.listPlayers.size());
-        if (this.listPlayers.size() == 0) return; // Ensure there are players
+        if (this.listPlayers.isEmpty()) return; // Ensure there are players
         Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
-
         System.out.println("Value index: " + currentPlayerIndex);
 
         if (mod.lostHelicop()) {
-            System.out.println("Button Pressed");
             updatePartyButton();
             return;
         }
@@ -147,11 +144,11 @@ public class control implements ActionListener, KeyListener, DocumentListener {
         }
 
 
-        if (currentPlayer.isPlayerDead()) {
+        /*if (currentPlayer.isPlayerDead()) {
             System.out.println("Dead player skipped");
             switchToNextPlayerNotOnHelicopter();
             return;
-        }
+        }*/
         if (this.mod.ifPlayerOnHelicop(currentPlayer)) {
             currentPlayer.setOnHelicopter(true);
             currentPlayer.setActionsRemaining(0);
@@ -185,23 +182,23 @@ public class control implements ActionListener, KeyListener, DocumentListener {
                     currentPlayer.deplacement(Direction.direction.RIGHT);
                     break;
                 case KeyEvent.VK_W:
-
+                    System.out.println("Assechement working");
                     this.mod.assechement(Direction.direction.FRONT,currentPlayer);
                     break;
                 case KeyEvent.VK_S:
-
+                    System.out.println("Assechement working");
                     this.mod.assechement(Direction.direction.CENTER,currentPlayer);
                     break;
                 case KeyEvent.VK_A:
-
+                    System.out.println("Assechement working");
                     this.mod.assechement(Direction.direction.LEFT,currentPlayer);
                     break;
                 case KeyEvent.VK_D:
-
+                    System.out.println("Assechement working");
                     this.mod.assechement(Direction.direction.RIGHT,currentPlayer);
                     break;
                 case KeyEvent.VK_Z:
-
+                    System.out.println("Assechement working");
                     this.mod.assechement(Direction.direction.BACK,currentPlayer);
                     break;
                 case KeyEvent.VK_ENTER:

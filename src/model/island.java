@@ -209,35 +209,35 @@ public class island extends Observable{
         switch (whereToGo) {
             case Direction.direction.FRONT:
                 if(p.isInBounds()) {
-                    if (this.grid[p.getX()][p.getY() - 1].getState() == ZoneState.FLOODED) {
-                        System.out.println("Coordinates after updating: " + p.getX() + p.getY());
-                        this.grid[p.getX()][p.getY() - 1].setState(ZoneState.NORMAL);
+                    if (this.grid[p.getX()-1][p.getY()].getState() == ZoneState.FLOODED) {
+                        System.out.println("Coordinates after updating: " + p.getX() + ", " + p.getY());
+                        this.grid[p.getX()-1][p.getY()].setState(ZoneState.NORMAL);
                     }
                 }
                 break;
             case Direction.direction.BACK:
                 if(p.isInBounds()) {
-                    if (this.grid[p.getX()][p.getY() + 1].getState() == ZoneState.FLOODED) {
-                        System.out.println("Coordinates after updating: " + p.getX() + p.getY());
-                        this.grid[p.getX()][p.getY() + 1].setState(ZoneState.NORMAL);
+                    if (this.grid[p.getX()+1][p.getY()].getState() == ZoneState.FLOODED) {
+                        System.out.println("Coordinates after updating: " + p.getX() + ", " +p.getY());
+                        this.grid[p.getX()+1][p.getY()].setState(ZoneState.NORMAL);
                     }
                 }
                 break;
 
             case Direction.direction.RIGHT:
                 if(p.isInBounds()) {
-                    if (this.grid[p.getX() + 1][p.getY()].getState() == ZoneState.FLOODED) {
-                        System.out.println("Coordinates after updating: " + p.getX() + p.getY());
-                        this.grid[p.getX() + 1][p.getY()].setState(ZoneState.NORMAL);
+                    if (this.grid[p.getX()][p.getY()+1].getState() == ZoneState.FLOODED) {
+                        System.out.println("Coordinates after updating: " + p.getX() +", " + p.getY());
+                        this.grid[p.getX()][p.getY()+1].setState(ZoneState.NORMAL);
                     }
                 }
                 break;
 
             case Direction.direction.LEFT:
                 if(p.isInBounds()) {
-                    if (this.grid[p.getX() - 1][p.getY()].getState() == ZoneState.FLOODED) {
-                        System.out.println("Coordinates after updating: " + p.getX() + p.getY());
-                        this.grid[p.getX() - 1][p.getY()].setState(ZoneState.NORMAL);
+                    if (this.grid[p.getX()][p.getY()-1].getState() == ZoneState.FLOODED) {
+                        System.out.println("Coordinates after updating: " + p.getX() +", " + p.getY());
+                        this.grid[p.getX()][p.getY()-1].setState(ZoneState.NORMAL);
                     }
                 }
                 break;
@@ -257,7 +257,7 @@ public class island extends Observable{
             if(p.getPlayerKey() > 0) {
                 zoneChecked.setState(ZoneState.NORMAL);
                 p.setCountArteFacts(p.getCountArteFacts() + 1);
-                p.setPlayerKey(p.getPlayerKey()-1);
+                p.decrementKeys();
             }
         }
         notifyObservers();
@@ -285,7 +285,6 @@ public class island extends Observable{
     }
 
     public boolean lostHelicop(){
-
         for(int i =0; i<LARGEUR; i++){
             for(int j=0; j<HAUTEUR; j++) {
                 if(this.grid[i][j] instanceof helicopterZone){
