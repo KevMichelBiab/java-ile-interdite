@@ -272,8 +272,7 @@ public class island extends Observable{
         this.grid = grid;
     }
     public void generateKey(Player p){
-        System.out.println("Key added!");
-        p.setPlayerKey(p.getPlayerKey() + 1);
+        p.incrementKeys();
     }
 
     public boolean ifPlayerOnHelicop(Player p){

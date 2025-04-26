@@ -18,6 +18,7 @@ public class Player extends Observable{
 
     private int previousX;
     private int previousY;
+    private boolean isKeyUpdated = false; // I am using this for my game log so that it shows when the player gets a new key
 
 
 
@@ -32,6 +33,14 @@ public class Player extends Observable{
 
 
     };
+
+    public boolean isKeyUpdated() {
+        return isKeyUpdated;
+    }
+
+    public void setKeyUpdated(boolean keyUpdated) {
+        isKeyUpdated = keyUpdated;
+    }
 
     public void setActionsRemaining(int actionsRemaining) {
         this.actionsRemaining = actionsRemaining;
@@ -89,6 +98,11 @@ public class Player extends Observable{
         }
     }
 
+    public void incrementKeys(){
+        this.playerKey++;
+        this.isKeyUpdated = true;
+    }
+
     public int getX() {
         return x;
     }
@@ -114,6 +128,8 @@ public class Player extends Observable{
     }
     public int getPreviousX() { return previousX; }
     public int getPreviousY() { return previousY; }
+
+
 
     public void deplacement(Direction.direction whereToGo) {
         this.previousX = x;

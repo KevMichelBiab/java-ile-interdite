@@ -41,6 +41,8 @@ public class Window {
         this.frame.setLayout(new BorderLayout());
         this.background = new backgroundImage();
 
+
+
         // 1. Main background panel
         //JPanel mainPanel = new JPanel(new BorderLayout());
        // mainPanel.setBackground(new Color(135, 206, 235)); // Solid background
@@ -82,6 +84,7 @@ public class Window {
 
         //this.buttons = new Buttons(plateau,this.grid);
         this.buttons = new Buttons(plateau, this.grid);
+        this.buttons.setOpaque(false);
         // Add buttons at the top
         //gameSettings.add(buttons, BorderLayout.NORTH);
         gameSettings.add(buttons, BorderLayout.NORTH);
@@ -126,6 +129,8 @@ public class Window {
 
         this.playerLog = new JTextArea();
         this.playerLog.setEditable(false);
+        this.playerLog.setBackground(new Color(242,210,188));
+        this.playerLog.setText("Welcome to the forbidden island. Your goal is to pick all the artefacts and reach the helicopter together before the whole island disappears");
         JScrollPane logScroll = new JScrollPane(this.playerLog);
         logScroll.setBorder(BorderFactory.createTitledBorder("Game Log"));
         logScroll.setPreferredSize(new Dimension(900,300));
@@ -319,6 +324,14 @@ public class Window {
 
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public JTextArea getPlayerLog() {
+        return playerLog;
+    }
+
+    public void setPlayerLog(JTextArea playerLog) {
+        this.playerLog = playerLog;
     }
 
     public void playBackgroundMusic() {
