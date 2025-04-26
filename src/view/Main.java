@@ -6,12 +6,22 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[]args){
-        island plat = new island();
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new Player("James"));
-        players.add(new Player("Eli"));
-        players.add(new Player("Lex"));
+        IntroWindow intro = new IntroWindow(null);
+        intro.setVisible(true);
 
+        // Get names from intro window
+
+        ArrayList<String> names = intro.getPlayerNames();
+        if(names.isEmpty()){
+            System.exit(0);
+        }
+        ArrayList<Player> players = new ArrayList<>();
+        for(String name : names){
+            players.add(new Player(name));
+        }
+        // Create players with entered names
+
+        island plat = new island();
         Window window = new Window(plat,players);
         control ctrl = new control(plat, players);
         ctrl.setWindow(window);
