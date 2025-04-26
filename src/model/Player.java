@@ -16,6 +16,10 @@ public class Player extends Observable{
     private boolean onHelicopter = false;
     public boolean isPlayerDead = false;
 
+    private int previousX;
+    private int previousY;
+
+
 
     public Player(String name){
         this.name = name;
@@ -108,8 +112,12 @@ public class Player extends Observable{
     public void setPlayerKey(int keynumber) {
         this.playerKey = keynumber;
     }
+    public int getPreviousX() { return previousX; }
+    public int getPreviousY() { return previousY; }
 
     public void deplacement(Direction.direction whereToGo) {
+        this.previousX = x;
+        this.previousY = y;
         switch (whereToGo) {
             case FRONT:
                 if (this.x > 0) this.x--;

@@ -17,6 +17,8 @@ public class Grid extends JPanel implements Observer {
     private island plateau;
 
 
+
+
     public final static int TAILLE = 30;
 
     private ArrayList<Player> listOfPlayers;
@@ -51,6 +53,8 @@ public class Grid extends JPanel implements Observer {
         Dimension dim = new Dimension((island.LARGEUR) * TAILLE + 1, (island.HAUTEUR) * TAILLE + 1);
         this.setPreferredSize(dim);
         setFocusable(true);
+        requestFocusInWindow();
+        setDoubleBuffered(true);
 
 
     }
@@ -108,11 +112,17 @@ public class Grid extends JPanel implements Observer {
     }
 
     public void drawPlayerNAme(Graphics g, Player play) {
-        // Truncate name to 3 characters max
-        //String playerName = play.getName().substring(0, Math.min(3, play.getName().length()));
-        String playerName = play.getName().substring(0,Math.min(3, play.getName().length()));
+        // Clear previous position first
+        //paintCellBackground(play.getPreviousX(), play.getPreviousY());
+        paintCellBackground(play.getPreviousX(), play.getPreviousY() );
 
-        Font font = new Font("Arial",Font.BOLD, 12);
+        // Then draw new position
+       // String playerName = play.getName().substring(0, Math.min(3, play.getName().length()));
+        //Font font = new Font("Arial",Font.BOLD, 12);
+       // g.setFont(font);
+
+        String playerName = play.getName().substring(0, Math.min(3,play.getName().length()));
+        Font font = new Font("Arial", Font.BOLD, 12);
         g.setFont(font);
 
 
@@ -130,5 +140,32 @@ public class Grid extends JPanel implements Observer {
         int centerY = pixelY + (TAILLE / 2) + (metrics.getAscent() - metrics.getDescent()) / 2;
         g.setColor(Color.BLACK);
         g.drawString(playerName, centerX, centerY);
+
+    }
+
+
+    public  Color getCellColor(ZoneState state){
+        //It is better to do an enhanced switch here
+        return switch (state) {
+            case ZoneState.NORMAL -> new Color(255, 255, 255, 0);
+            case ZoneState.FLOODED -> Color.GREEN;
+            case ZoneState.SUNK -> Color.BLACK;
+            case ZoneState.ARTEFACTS -> Color.ORANGE;
+            case ZoneState.HELICOPTER -> Color.MAGENTA;
+        };
+    }
+
+
+
+    public void paintCellBackground(int x, int y){
+        Graphics g = getGraphics();
+        if(g != null){
+            zone cell = plateau.getGrid()[x][y];
+            Color cellColor = getCellColor(cell.getState());
+            g.setColor(cellColor);
+            g.fillRect(y*TAILLE, x*TAILLE, TAILLE, TAILLE);
+            g.setColor(Color.BLUE);
+            g.drawRect(y*TAILLE, x*TAILLE, TAILLE, TAILLE);
+        }
     }
 }

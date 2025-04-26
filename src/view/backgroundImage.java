@@ -24,6 +24,7 @@ public class backgroundImage extends JPanel {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+
         if (backgroundImage != null) {
             g.drawImage(backgroundImage, 0, 0, this); // Draw it at coordinates (0, 0)
         }

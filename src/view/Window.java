@@ -30,6 +30,7 @@ public class Window {
     private JScrollPane scrollPane;
     private JTextArea playerLog;
 
+
     private backgroundImage background;
 
 
@@ -38,132 +39,102 @@ public class Window {
         this.frame = new JFrame("ILE INTERDITE");
         this.frame.setSize(1920, 1080);
         this.frame.setLayout(new BorderLayout());
-
         this.background = new backgroundImage();
+
+        // 1. Main background panel
+        //JPanel mainPanel = new JPanel(new BorderLayout());
+       // mainPanel.setBackground(new Color(135, 206, 235)); // Solid background
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(new Color(135,206,235));
+
+        // 2. Add grid first
+        //this.grid = new Grid(plateau, players);
+        //grid.setOpaque(false);
+        //mainPanel.add(grid, BorderLayout.CENTER);
+
         this.grid = new Grid(plateau, players);
-        // Add this after grid initialization
+        this.grid.setOpaque(false);
+        mainPanel.add(this.grid, BorderLayout.CENTER);
+        /*Now grid occupies the whole main panel*/
 
+        // 3. Create overlay panel for UI elements
+        //JPanel uiOverlay = new JPanel(new BorderLayout());
+        //uiOverlay.setOpaque(false);
+        JPanel uiOverlay = new JPanel(new BorderLayout());
+        uiOverlay.setOpaque(false);
 
+        // 4. Add your gameSettings panel to overlay
+        //JPanel gameSettings = createGameSettingsPanel(players);
+        //uiOverlay.add(gameSettings, BorderLayout.EAST);
+        JPanel gameSettings = createGameSettingsPanel(players);
+        uiOverlay.add(gameSettings, BorderLayout.EAST);
+        /*Here we make another box containing our gameSetting on the right*/
 
-        JPanel gameSettings = new JPanel();
-        gameSettings.setPreferredSize(new Dimension(900, 900));
-        gameSettings.setLayout(new BoxLayout(gameSettings, BoxLayout.Y_AXIS));
-        /*
-         * Here I basically ask the layou manager to set the size of exactly 600x900
-         * It is preferred to setmax because here the layout will actually try his best to respect
-         * the measurement and make the panel appear. But with setMax it might not be the case
-         * the panel might disappear*/
+        // 5. We layer the the box containing gamesetting and the box that represents grid in mainPanel
+        //What this does is that grid and overlay are on top of each other
+        //But since the gamesetting on the right in overlay it gives an illusion that it is on the right
+        //of grid
 
-        //gameSettings.setLayout(new BoxLayout(gameSettings, BoxLayout.Y_AXIS));
-        //gameSettings.setBackground(Color.CYAN);
+        //mainPanel.add(uiOverlay, BorderLayout.CENTER);
+        //frame.add(mainPanel);
+        mainPanel.add(uiOverlay, BorderLayout.CENTER);
+        frame.add(mainPanel);
 
-        /*JPanel buttonSection = new JPanel();
-        buttonSection.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
-        buttonSection.setBackground(Color.PINK);*/
+        //this.buttons = new Buttons(plateau,this.grid);
+        this.buttons = new Buttons(plateau, this.grid);
+        // Add buttons at the top
+        //gameSettings.add(buttons, BorderLayout.NORTH);
+        gameSettings.add(buttons, BorderLayout.NORTH);
 
+        // Player info panel
+        //JPanel playerInfoContainer = new JPanel();
+        //playerInfoContainer.setLayout(new BoxLayout(playerInfoContainer, BoxLayout.Y_AXIS));
+        //playerInfoContainer.setOpaque(false);
+        JPanel playerInfoContainer = new JPanel();
+        playerInfoContainer.setLayout(new BoxLayout(playerInfoContainer, BoxLayout.Y_AXIS));
+        playerInfoContainer.setOpaque(false);
 
-        this.buttons = new Buttons(plateau, grid);
-
-        //this.buttons.setBackground(Color.PINK);
-        gameSettings.add(this.buttons);
-        //gameSettings.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 10));
-        //JPanel spacer = new JPanel();
-        //spacer.setPreferredSize(new Dimension(900, 900)); // This takes up the remaining vertical space
-        //spacer.setBackground(Color.CYAN); // Set the background color to cyan
-        //gameSettings.add(spacer);
-
-
-        JPanel playerInputPanel = new JPanel();
-        playerInputPanel.setPreferredSize(new Dimension(900, 160));
-        //playerInputPanel.setBackground(Color.GREEN);
-        playerInputPanel.setLayout(new BoxLayout(playerInputPanel, BoxLayout.Y_AXIS));
-
-
-        for (int i = 0; i < players.size(); i++) {
-            JPanel playerRow = new JPanel();
-            playerRow.setPreferredSize(new Dimension(900, 50));
-            playerRow.setBackground(new Color(135, 206, 235, 100));
-
-            playerRow.setLayout(new BoxLayout(playerRow, BoxLayout.X_AXIS));
-            // Fais en sorte que les textfields et labels commencent a etre genere a gauch de gamesettings
-
-
-            Dimension shortFieldSize = new Dimension(200, 30);
-            Dimension nameFieldSize = new Dimension(200, 30);
-
-            // Create new fields for each player row
-            JLabel labelName = new JLabel("Current Player");
-            JTextField textfieldName = new JTextField(50);
-            this.textfieldNames.add(textfieldName);
-            //textfieldName.setPreferredSize(nameFieldSize);
-            textfieldName.setMaximumSize(nameFieldSize);
-            textfieldName.setText(players.get(i).getName());
-
-            JLabel labelKey = new JLabel("Key count");
-            JTextField textfieldKey = new JTextField(50);
-            this.textfieldKeys.add(textfieldKey);
-            //textfieldKey.setPreferredSize(shortFieldSize);
-            textfieldKey.setMaximumSize(shortFieldSize);
-            textfieldKey.setText(String.valueOf(players.get(i).getPlayerKey()));
-
-            JLabel labelRemainActions = new JLabel("Remaining actions");
-            JTextField textFieldAction = new JTextField(50);
-            this.textFieldActions.add(textFieldAction);
-            //textFieldAction.setPreferredSize(shortFieldSize);
-            textFieldAction.setMaximumSize(shortFieldSize);
-            textFieldAction.setText(String.valueOf(players.get(i).getActionsRemaining()));
-
-            JLabel labelArtefacts = new JLabel("Artefacts numbers: ");
-            JTextField textfieldArtefact = new JTextField(50);
-            this.textfieldArtefacts.add(textfieldArtefact);
-            //textfieldArtefact.setPreferredSize(shortFieldSize);
-            textfieldArtefact.setMaximumSize(shortFieldSize);
-            textfieldArtefact.setText(String.valueOf(players.get(i).getCountArteFacts()));
-
-            textfieldName.setFocusable(false);
-            textfieldKey.setFocusable(false);
-            textFieldAction.setFocusable(false);
-            textfieldArtefact.setFocusable(false);
-
-            playerRow.add(labelName);
-            playerRow.add(textfieldName);
-            playerRow.add(Box.createRigidArea(new Dimension(0, 10)));
-
-            playerRow.add(labelKey);
-            playerRow.add(textfieldKey);
-            playerRow.add(Box.createRigidArea(new Dimension(0, 10)));
-
-            playerRow.add(labelRemainActions);
-            playerRow.add(textFieldAction);
-            playerRow.add(Box.createRigidArea(new Dimension(0, 10)));
-
-            playerRow.add(labelArtefacts);
-            playerRow.add(textfieldArtefact);
-
-            playerInputPanel.add(playerRow);
-
+        //for (Player player : players) {
+           // playerInfoContainer.add(createPlayerPanel(player));
+           // playerInfoContainer.add(Box.createVerticalStrut(10));
+        //}
+        for(Player player : players){
+            playerInfoContainer.add(createPlayerPanel(player));
+            playerInfoContainer.add(Box.createVerticalStrut(10));
         }
 
+        // Add player info with scroll
+        //JScrollPane playerScroll = new JScrollPane(playerInfoContainer);
+        //playerScroll.setBorder(BorderFactory.createTitledBorder("Player Status"));
+        //playerScroll.setOpaque(false);
+        //playerScroll.getViewport().setOpaque(false);
+        //gameSettings.add(playerScroll, BorderLayout.CENTER);
 
-        gameSettings.add(playerInputPanel);
-        playerInputPanel.setOpaque(false);
-        buttons.setOpaque(false);
-        grid.setOpaque(false);
-        gameSettings.setOpaque(false);
-        //gameSettings.setBackground(Color.YELLOW);
+        JScrollPane playerScroll = new JScrollPane(playerInfoContainer);
+        playerScroll.setBorder(BorderFactory.createTitledBorder("Player status"));
+        playerScroll.setOpaque(false);
+        playerScroll.getViewport().setOpaque(false);
+        gameSettings.add(playerScroll, BorderLayout.CENTER);
 
-        JPanel spacer = new JPanel();
-        spacer.setPreferredSize(new Dimension(900, 720)); // This takes up the remaining vertical space
-        //spacer.setBackground(Color.CYAN); // Set the background color to cyan
-        spacer.setOpaque(false);
+        // Add game log at bottom
+        //playerLog = new JTextArea();
+        //playerLog.setEditable(false);
+        //JScrollPane logScroll = new JScrollPane(playerLog);
+        //logScroll.setBorder(BorderFactory.createTitledBorder("Game Log"));
+        //logScroll.setPreferredSize(new Dimension(900, 300));
+        //gameSettings.add(logScroll, BorderLayout.SOUTH);
 
-        gameSettings.add(spacer);
+        this.playerLog = new JTextArea();
+        this.playerLog.setEditable(false);
+        JScrollPane logScroll = new JScrollPane(this.playerLog);
+        logScroll.setBorder(BorderFactory.createTitledBorder("Game Log"));
+        logScroll.setPreferredSize(new Dimension(900,300));
+        gameSettings.add(logScroll, BorderLayout.SOUTH);
 
-        this.background.add(grid, BorderLayout.WEST);
-        this.background.add(gameSettings, BorderLayout.EAST);
-        //this.frame.add(grid, BorderLayout.WEST);  // Add the grid panel to the left of the frame
-        // this.frame.add(gameSettings, BorderLayout.EAST);  // Add the buttons panel to the right of the frame
-        frame.add(this.background);
+        // Add components to background
+        background.add(grid, BorderLayout.WEST);
+        background.add(gameSettings, BorderLayout.EAST);
+        this.frame.add(background);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
@@ -178,6 +149,100 @@ public class Window {
         grid.requestFocusInWindow();
 
 
+
+    }
+
+
+    private JPanel createGameSettingsPanel(ArrayList<Player> players){
+        JPanel gameSettings = new JPanel(new BorderLayout());
+        gameSettings.setPreferredSize(new Dimension(900,1080));
+        gameSettings.setOpaque(false);
+        return gameSettings;
+    }
+    /*private JPanel createPlayerPanel(Player player) {
+        JPanel panel = new JPanel(new GridLayout(0, 2, 10, 5));
+        panel.setBorder(BorderFactory.createEtchedBorder());
+        panel.setMaximumSize(new Dimension(880, 80));
+        panel.setOpaque(false);
+
+        // Create text fields for each player attribute
+        JTextField nameField = createTextField(player.getName());
+        textfieldNames.add(nameField);
+
+        JTextField keyField = createTextField(String.valueOf(player.getPlayerKey()));
+        textfieldKeys.add(keyField);
+
+        JTextField actionField = createTextField(String.valueOf(player.getActionsRemaining()));
+        textFieldActions.add(actionField);
+
+        JTextField artefactField = createTextField(String.valueOf(player.getCountArteFacts()));
+        textfieldArtefacts.add(artefactField);
+
+        // Add fields to the panel with labels
+        addLabelField(panel, "Player:", nameField);
+        addLabelField(panel, "Keys:", keyField);
+        addLabelField(panel, "Actions:", actionField);
+        addLabelField(panel, "Artefacts:", artefactField);
+
+        return panel;
+    }*/
+    private JPanel createPlayerPanel(Player player){
+        JPanel panel = new JPanel(new GridLayout(0,2,10,5));
+        panel.setBorder(BorderFactory.createEtchedBorder());
+        panel.setMaximumSize(new Dimension(800,80));
+        panel.setOpaque(false);
+
+        JTextField nameField = createTextField(player.getName());
+        this.textfieldNames.add(nameField);
+
+        JTextField keyField = createTextField(String.valueOf(player.getPlayerKey()));
+        this.textfieldKeys.add(keyField);
+
+        JTextField actionField = createTextField(String.valueOf(player.getActionsRemaining()));
+        this.textFieldActions.add(actionField);
+
+        JTextField artefactField = createTextField(String.valueOf(player.getActionsRemaining()));
+        this.textfieldArtefacts.add(artefactField);
+
+        addLabelField(panel, "Player:", nameField);
+        addLabelField(panel, "Keys:", keyField);
+        addLabelField(panel, "Actions:", actionField);
+        addLabelField(panel, "Artefacts:", artefactField);
+
+        return panel;
+
+    }
+
+    /*private JTextField createTextField(String value) {
+        JTextField textField = new JTextField(value);
+        textField.setEditable(false);
+        textField.setBorder(null);
+        textField.setOpaque(false);
+        textField.setForeground(Color.YELLOW);
+        return textField;
+    }
+
+    private void addLabelField(JPanel panel, String label, JTextField textField) {
+        JLabel jLabel = new JLabel(label);
+        jLabel.setForeground(Color.WHITE);
+        panel.add(jLabel);
+        panel.add(textField);
+    }*/
+
+    private JTextField createTextField(String value){
+        JTextField textField = new JTextField(value);
+        textField.setEditable(false);
+        textField.setBorder(null);
+        textField.setOpaque(false);
+        textField.setForeground(Color.YELLOW);
+        return textField;
+    }
+
+    private void addLabelField(JPanel panel, String label, JTextField textField){
+        JLabel jLabel = new JLabel(label);
+        jLabel.setForeground(Color.WHITE);
+        panel.add(jLabel);
+        panel.add(textField);
     }
 
 
