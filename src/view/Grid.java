@@ -147,11 +147,11 @@ public class Grid extends JPanel implements Observer {
     public  Color getCellColor(ZoneState state){
         //It is better to do an enhanced switch here
         return switch (state) {
-            case ZoneState.NORMAL -> new Color(255, 255, 255, 0);
-            case ZoneState.FLOODED -> Color.GREEN;
-            case ZoneState.SUNK -> Color.BLACK;
-            case ZoneState.ARTEFACTS -> Color.ORANGE;
-            case ZoneState.HELICOPTER -> Color.MAGENTA;
+            case NORMAL -> new Color(255, 255, 255, 0);
+            case FLOODED -> Color.GREEN;
+            case SUNK -> Color.BLACK;
+            case ARTEFACTS -> Color.ORANGE;
+            case HELICOPTER -> Color.MAGENTA;
         };
     }
 
