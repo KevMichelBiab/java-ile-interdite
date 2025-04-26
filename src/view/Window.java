@@ -129,7 +129,7 @@ public class Window {
 
         this.playerLog = new JTextArea();
         this.playerLog.setEditable(false);
-        this.playerLog.setBackground(new Color(242,210,188));
+        this.playerLog.setBackground(new Color(151,255,193));
         this.playerLog.setText("Welcome to the forbidden island. Your goal is to pick all the artefacts and reach the helicopter together before the whole island disappears");
         JScrollPane logScroll = new JScrollPane(this.playerLog);
         logScroll.setBorder(BorderFactory.createTitledBorder("Game Log"));
