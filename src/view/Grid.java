@@ -49,8 +49,9 @@ public class Grid extends JPanel implements Observer{
         }
 
 
-        Dimension dim = new Dimension((island.LARGEUR) * TAILLE, (island.HAUTEUR) * TAILLE);
+        Dimension dim = new Dimension((island.LARGEUR) * TAILLE+1, (island.HAUTEUR) * TAILLE+1);
         this.setPreferredSize(dim);
+        setFocusable(true);
 
 
     }

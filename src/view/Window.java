@@ -1,10 +1,13 @@
 package view;
+
 import model.*;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +27,8 @@ public class Window {
     private ArrayList<JTextField> textfieldKeys = new ArrayList<>();
     private ArrayList<JTextField> textfieldArtefacts = new ArrayList<>();
     private ArrayList<Player> players;
+    private JScrollPane scrollPane;
+    private JTextArea playerLog;
 
     private backgroundImage background;
 
@@ -36,6 +41,8 @@ public class Window {
 
         this.background = new backgroundImage();
         this.grid = new Grid(plateau, players);
+        // Add this after grid initialization
+
 
 
         JPanel gameSettings = new JPanel();
@@ -77,8 +84,7 @@ public class Window {
             playerRow.setPreferredSize(new Dimension(900, 50));
             playerRow.setBackground(Color.YELLOW);
             playerRow.setLayout(new BoxLayout(playerRow, BoxLayout.X_AXIS));
-           // Fais en sorte que les textfields et labels commencent a etre genere a gauch de gamesettings
-
+            // Fais en sorte que les textfields et labels commencent a etre genere a gauch de gamesettings
 
 
             Dimension shortFieldSize = new Dimension(200, 30);
@@ -113,6 +119,11 @@ public class Window {
             textfieldArtefact.setMaximumSize(shortFieldSize);
             textfieldArtefact.setText(String.valueOf(players.get(i).getCountArteFacts()));
 
+            textfieldName.setFocusable(false);
+            textfieldKey.setFocusable(false);
+            textFieldAction.setFocusable(false);
+            textfieldArtefact.setFocusable(false);
+
             playerRow.add(labelName);
             playerRow.add(textfieldName);
             playerRow.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -138,121 +149,128 @@ public class Window {
         buttons.setOpaque(false);
         grid.setOpaque(false);
         gameSettings.setOpaque(false);
-            gameSettings.setBackground(Color.YELLOW);
+        gameSettings.setBackground(Color.YELLOW);
 
-            JPanel spacer = new JPanel();
-            spacer.setPreferredSize(new Dimension(900, 720)); // This takes up the remaining vertical space
-            spacer.setBackground(Color.CYAN); // Set the background color to cyan
-            gameSettings.add(spacer);
-
-            this.background.add(grid, BorderLayout.WEST);
-            this.background.add(gameSettings, BorderLayout.EAST);
-            //this.frame.add(grid, BorderLayout.WEST);  // Add the grid panel to the left of the frame
-            // this.frame.add(gameSettings, BorderLayout.EAST);  // Add the buttons panel to the right of the frame
-            frame.add(this.background);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setVisible(true);
-
-            grid.requestFocusInWindow();
-
-            playBackgroundMusic();
+        JPanel spacer = new JPanel();
+        spacer.setPreferredSize(new Dimension(900, 720)); // This takes up the remaining vertical space
+        spacer.setBackground(Color.CYAN); // Set the background color to cyan
 
 
-        }
+        gameSettings.add(spacer);
+
+        this.background.add(grid, BorderLayout.WEST);
+        this.background.add(gameSettings, BorderLayout.EAST);
+        //this.frame.add(grid, BorderLayout.WEST);  // Add the grid panel to the left of the frame
+        // this.frame.add(gameSettings, BorderLayout.EAST);  // Add the buttons panel to the right of the frame
+        frame.add(this.background);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
 
 
-        public JFrame getFrame () {
-            return frame;
-        }
+        //Creating a background music
+        playBackgroundMusic();
 
-        public void setFrame (JFrame frame){
-            this.frame = frame;
-        }
 
-        public Grid getGrid () {
-            return grid;
-        }
+        //Creating  a gameLog where information can be updated about the player
 
-        public void setGrid (Grid grid){
-            this.grid = grid;
-        }
 
-        public Buttons getButtons () {
-            return buttons;
-        }
+        grid.requestFocusInWindow();
 
-        public void setButtons (Buttons buttons){
-            this.buttons = buttons;
-        }
 
-        public JLabel getLabelName () {
-            return labelName;
-        }
+    }
 
-        public void setLabelName (JLabel labelName){
-            this.labelName = labelName;
-        }
 
-        public JLabel getLabelKey () {
-            return labelKey;
-        }
 
-        public void setLabelKey (JLabel labelKey){
-            this.labelKey = labelKey;
-        }
 
-        public JLabel getLabelRemainActions () {
-            return labelRemainActions;
-        }
 
-        public void setLabelRemainActions (JLabel labelRemainActions){
-            this.labelRemainActions = labelRemainActions;
-        }
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
+    }
 
-        public JLabel getLabelArtefacts () {
-            return labelArtefacts;
-        }
+    public Grid getGrid() {
+        return grid;
+    }
 
-        public void setLabelArtefacts (JLabel labelArtefacts){
-            this.labelArtefacts = labelArtefacts;
-        }
+    public void setGrid(Grid grid) {
+        this.grid = grid;
+    }
 
-        public ArrayList<JTextField> getTextFieldActions () {
-            return textFieldActions;
-        }
+    public Buttons getButtons() {
+        return buttons;
+    }
 
-        public ArrayList<JTextField> getTextfieldNames () {
-            return textfieldNames;
-        }
+    public void setButtons(Buttons buttons) {
+        this.buttons = buttons;
+    }
 
-        public ArrayList<JTextField> getTextfieldKeys () {
-            return textfieldKeys;
-        }
+    public JLabel getLabelName() {
+        return labelName;
+    }
 
-        public ArrayList<JTextField> getTextfieldArtefacts () {
-            return textfieldArtefacts;
-        }
+    public void setLabelName(JLabel labelName) {
+        this.labelName = labelName;
+    }
 
-        public ArrayList<Player> getPlayers () {
-            return players;
-        }
+    public JLabel getLabelKey() {
+        return labelKey;
+    }
 
-        public void playBackgroundMusic() {
-            new Thread(() -> {
-                try {
-                    File musicFile = new File("src/view/Mystery-Bazaar.wav");
-                    AudioInputStream  audioStream = AudioSystem.getAudioInputStream(musicFile);
+    public void setLabelKey(JLabel labelKey) {
+        this.labelKey = labelKey;
+    }
 
-                    Clip clip = AudioSystem.getClip();
-                    clip.open(audioStream);
+    public JLabel getLabelRemainActions() {
+        return labelRemainActions;
+    }
 
-                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+    public void setLabelRemainActions(JLabel labelRemainActions) {
+        this.labelRemainActions = labelRemainActions;
+    }
 
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e){
-                    e.printStackTrace();
-                }
-            }).start();
-        }
+    public JLabel getLabelArtefacts() {
+        return labelArtefacts;
+    }
+
+    public void setLabelArtefacts(JLabel labelArtefacts) {
+        this.labelArtefacts = labelArtefacts;
+    }
+
+    public ArrayList<JTextField> getTextFieldActions() {
+        return textFieldActions;
+    }
+
+    public ArrayList<JTextField> getTextfieldNames() {
+        return textfieldNames;
+    }
+
+    public ArrayList<JTextField> getTextfieldKeys() {
+        return textfieldKeys;
+    }
+
+    public ArrayList<JTextField> getTextfieldArtefacts() {
+        return textfieldArtefacts;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void playBackgroundMusic() {
+        new Thread(() -> {
+            try {
+                File musicFile = new File("src/view/Mystery-Bazaar.wav");
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(musicFile);
+
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioStream);
+
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
 
 
 }

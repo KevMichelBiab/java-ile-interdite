@@ -49,17 +49,7 @@ public class Buttons extends JPanel implements Observer{
         this.add(keyExchange);
         this.add(partyWon);
 
-
-
-
-
-
-
-
-
         // Initialize control and set action listeners for buttons (if needed)
-
-
         finDeTour.setFocusable(false);
         partyWon.setFocusable(false);
         keyExchange.setFocusable(false);
