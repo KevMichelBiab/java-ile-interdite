@@ -305,6 +305,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
     }
 
+
     private void switchToNextPlayerNotOnHelicopter() {
         int attempts = 0; // Just to prevent infinite loop
         do {

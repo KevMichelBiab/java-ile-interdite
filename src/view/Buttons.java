@@ -32,29 +32,38 @@ public class Buttons extends JPanel implements Observer{
 
     public Buttons(island mod, Grid gamePanel) {
         this.mod = mod;
-
+        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         // Create buttons
-        this.finDeTour = new JButton("<<Fin de Tour>>");
-        this.partyWon = new JButton("<<End>>");
-        this.keyExchange = new JButton("Key Exchange");
-        this.finDeTour.setPreferredSize(new Dimension(200,40));
-        this.partyWon.setPreferredSize(new Dimension(200,40));
-        this.keyExchange.setPreferredSize(new Dimension(200,40));
+        this.finDeTour = createdStyledButton("<<Fin de Tour>>");
+        this.partyWon = createdStyledButton("<<End>>");
+        this.keyExchange = createdStyledButton("Key Exchange");
+        //this.finDeTour.setPreferredSize(new Dimension(200,40));
+        //this.partyWon.setPreferredSize(new Dimension(200,40));
+        //this.keyExchange.setPreferredSize(new Dimension(200,40));
 
 
 
-        this.setPreferredSize(new Dimension(650, 20));
+        //this.setPreferredSize(new Dimension(650, 20));
         // Align left with spacing
         this.add(finDeTour);
+        this.add(Box.createHorizontalStrut(20));
         this.add(keyExchange);
+        this.add(Box.createHorizontalStrut(20));
         this.add(partyWon);
 
-        // Initialize control and set action listeners for buttons (if needed)
+
         finDeTour.setFocusable(false);
         partyWon.setFocusable(false);
         keyExchange.setFocusable(false);
     }
 
+    public JButton createdStyledButton(String text){
+        JButton btn = new JButton(text);
+        btn.setPreferredSize(new Dimension(180,40));
+        btn.setFocusable(false);
+        return btn;
+    }
 
     @Override
     public void update() {

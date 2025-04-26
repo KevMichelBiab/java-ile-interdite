@@ -55,7 +55,7 @@ public class Window {
          * the panel might disappear*/
 
         //gameSettings.setLayout(new BoxLayout(gameSettings, BoxLayout.Y_AXIS));
-        gameSettings.setBackground(Color.CYAN);
+        //gameSettings.setBackground(Color.CYAN);
 
         /*JPanel buttonSection = new JPanel();
         buttonSection.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
@@ -64,7 +64,7 @@ public class Window {
 
         this.buttons = new Buttons(plateau, grid);
 
-        this.buttons.setBackground(Color.PINK);
+        //this.buttons.setBackground(Color.PINK);
         gameSettings.add(this.buttons);
         //gameSettings.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 10));
         //JPanel spacer = new JPanel();
@@ -75,14 +75,15 @@ public class Window {
 
         JPanel playerInputPanel = new JPanel();
         playerInputPanel.setPreferredSize(new Dimension(900, 160));
-        playerInputPanel.setBackground(Color.GREEN);
+        //playerInputPanel.setBackground(Color.GREEN);
         playerInputPanel.setLayout(new BoxLayout(playerInputPanel, BoxLayout.Y_AXIS));
 
 
         for (int i = 0; i < players.size(); i++) {
             JPanel playerRow = new JPanel();
             playerRow.setPreferredSize(new Dimension(900, 50));
-            playerRow.setBackground(Color.YELLOW);
+            playerRow.setBackground(new Color(135, 206, 235, 100));
+
             playerRow.setLayout(new BoxLayout(playerRow, BoxLayout.X_AXIS));
             // Fais en sorte que les textfields et labels commencent a etre genere a gauch de gamesettings
 
@@ -149,12 +150,12 @@ public class Window {
         buttons.setOpaque(false);
         grid.setOpaque(false);
         gameSettings.setOpaque(false);
-        gameSettings.setBackground(Color.YELLOW);
+        //gameSettings.setBackground(Color.YELLOW);
 
         JPanel spacer = new JPanel();
         spacer.setPreferredSize(new Dimension(900, 720)); // This takes up the remaining vertical space
-        spacer.setBackground(Color.CYAN); // Set the background color to cyan
-
+        //spacer.setBackground(Color.CYAN); // Set the background color to cyan
+        spacer.setOpaque(false);
 
         gameSettings.add(spacer);
 
