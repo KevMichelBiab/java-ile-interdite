@@ -268,15 +268,16 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
 
     public boolean winningParty(){
-        int count = 0;
+        int count = this.artefactTotalCount();
         boolean onHelicop = true;
-        for(int i = 0; i<this.listPlayers.size(); i++){
-            count += this.listPlayers.get(i).getCountArteFacts();
-            if(!(this.mod.ifPlayerOnHelicop(this.listPlayers.get(i)))){
-                onHelicop = !onHelicop;
+        for(Player p : this.listPlayers){
+            if(!this.mod.ifPlayerOnHelicop(p)){
+                onHelicop = false;
+                break; //We exit if the player is not on the helicopter
             }
         }
-        return (count == 4) && onHelicop;
+        boolean hasEnoughArtefacts = (count == 4);
+        return onHelicop && hasEnoughArtefacts;
     }
     public boolean ifPlayerDead(){
         int howManyDead = 0;
@@ -331,11 +332,11 @@ public class control implements ActionListener, KeyListener, DocumentListener {
         //System.out.println("Switched to player: " + currentPlayerIndex);
     }
     public int artefactTotalCount(){
-        int count = 0;
+        int countArte = 0;
         for(Player p: this.listPlayers){
-            count += p.getCountArteFacts();
+            countArte += p.getCountArteFacts();
         }
-        return count;
+        return countArte;
     }
 
 

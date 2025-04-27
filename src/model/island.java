@@ -149,30 +149,23 @@ public class island extends Observable{
     }
 
     public Player exchangeKeys(ArrayList<Player> listPlayers, Player p){
-        Player otherPlayer = null;
-        for(int i=0; i<listPlayers.size(); i++){
-            if(listPlayers.get(i) == p){
-                continue;
-            }
-            otherPlayer = listPlayers.get(i);
-            if(p.getPlayerKey() > 0) {
-                if (this.grid[p.getX()][p.getY()] == this.grid[otherPlayer.getX()][otherPlayer.getY()]) {
-                    otherPlayer.setPlayerKey(otherPlayer.getPlayerKey() + p.getPlayerKey());
-                    System.out.println(otherPlayer.getName() + " Keys right after the update: " + otherPlayer.getPlayerKey());
-                    p.decrementKeys();
-                    System.out.println("Keys exchanged!");
-                    System.out.println(otherPlayer.getName() + " keys: " + otherPlayer.getPlayerKey());
-                    return otherPlayer;
+        int currentIndex = listPlayers.indexOf(p);
+        int nextIndex = (currentIndex + 1) % listPlayers.size();
+        Player nextPlayer = listPlayers.get(nextIndex);
 
-                }
+        boolean sameCell = this.grid[p.getX()][p.getY()].equals(this.grid[nextPlayer.getX()][nextPlayer.getY()]);
 
+        if(p.getPlayerKey() > 0  && sameCell){
+            nextPlayer.setPlayerKey(nextPlayer.getPlayerKey() + 1);
+            p.decrementKeys();
+            System.out.println(p.getName() + " gave 1 key to " + nextPlayer.getName());
+            System.out.println(p.getName() + " keys:" + p.getPlayerKey());
+            System.out.println(nextPlayer.getName() + "keys:" + nextPlayer.getPlayerKey());
 
-            }
+            return nextPlayer;
         }
-
-
-        System.out.println("Current player Keys : " + p.getPlayerKey());
-        return p;
+        System.out.println("Excahnge failed. Players not on the same cell or no keys available");
+        return null;
     }
     public void floodPlayer(Player p){
         if(this.grid[p.getX()][p.getY()].getState() == ZoneState.NORMAL) {
@@ -199,9 +192,10 @@ public class island extends Observable{
 
 
     public void actionButtonFinDeTour(Player p){
-        if(Math.random() < 0.2){
+        double randomValue = Math.random();
+        if(randomValue <0.3){
             this.floodPlayer(p);
-        } else {
+        } else if (randomValue < 0.6) {
             this.generateKey(p);
         }
     }
