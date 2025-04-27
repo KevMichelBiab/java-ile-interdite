@@ -149,6 +149,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
                 currentPlayer.setCountArteFacts(0);
                 updatePlayerInfo(currentPlayer);
                 window.getPlayerLog().setText(currentPlayer.getName() + " is on the helicopter zone!");
+                if(allHelicop()){gameOver=true;}
                 switchToNextPlayerNotOnHelicopter();
                 return;
             }
@@ -264,6 +265,15 @@ public class control implements ActionListener, KeyListener, DocumentListener {
             window.getButtons().getPartyWon().setBackground(Color.RED);
             window.getPlayerLog().setText("Not yet, you still have things before winning the party!");
         }
+    }
+    public boolean allHelicop(){
+        boolean check = true;
+        for(Player p: this.listPlayers){
+            if(!p.isOnHelicopter()){
+                 check = false;
+            }
+        }
+        return check;
     }
 
 
