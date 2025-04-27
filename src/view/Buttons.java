@@ -34,18 +34,12 @@ public class Buttons extends JPanel implements Observer{
         this.mod = mod;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
         // Create buttons
         this.finDeTour = createdStyledButton("<<Fin de Tour>>");
         this.partyWon = createdStyledButton("<<End>>");
         this.keyExchange = createdStyledButton("Key Exchange");
-        //this.finDeTour.setPreferredSize(new Dimension(200,40));
-        //this.partyWon.setPreferredSize(new Dimension(200,40));
-        //this.keyExchange.setPreferredSize(new Dimension(200,40));
 
-
-
-        //this.setPreferredSize(new Dimension(650, 20));
-        // Align left with spacing
         this.add(finDeTour);
         this.add(Box.createHorizontalStrut(20));
         this.add(keyExchange);

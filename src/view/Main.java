@@ -10,16 +10,16 @@ public class Main {
         intro.setVisible(true);
 
         // Get names from intro window
-
         ArrayList<String> names = intro.getPlayerNames();
         if(names.isEmpty()){
             System.exit(0);
         }
+        //Initialize the list of players that we will see in the game
         ArrayList<Player> players = new ArrayList<>();
         for(String name : names){
             players.add(new Player(name));
         }
-        // Create players with entered names
+
 
         island plat = new island();
         Window window = new Window(plat,players);
@@ -30,7 +30,7 @@ public class Main {
         window.getButtons().getPartyWon().addActionListener(ctrl);
         window.getButtons().getKeyExchange().addActionListener(ctrl);
 
-        /*plat.printIsland();*/
+
 
 
     }

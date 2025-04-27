@@ -20,23 +20,28 @@ public class IntroWindow extends JDialog {
     }
 
     public void setupUI(){
+        //Set the background and image size
         this.backgroundImage = new backgroundImage();
         this.backgroundImage.setPreferredSize(new Dimension(800,600));
-        //this.setLayout(new BorderLayout());
-        //this.setSize(1920,1080);
+
+        //The background is now the main content panel
         this.setContentPane(backgroundImage);
+        //GridBagLayout is used to set exactly how wide the component will be , where to place and the margins around the component
         this.backgroundImage.setLayout(new GridBagLayout());
 
+        //gbc controls the how we place elements
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(10,10,10,10);
+        gbc.gridwidth = GridBagConstraints.REMAINDER; //The component takes the full row
+        gbc.anchor = GridBagConstraints.CENTER;// The elements are at the center
+        gbc.insets = new Insets(10,10,10,10); //Add some space around the components
 
+        //The title of the intro screen
         JLabel titleLabel = new JLabel("ILE INTERDITE");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 48));
         titleLabel.setForeground(Color.WHITE);
         this.backgroundImage.add(titleLabel,gbc);
 
+        //the fields where we can input player names
         JPanel inputPanel = new JPanel(new GridLayout(3,2,10,10));
         inputPanel.setOpaque(false);
         this.nameFields = new JTextField[3];
@@ -47,21 +52,19 @@ public class IntroWindow extends JDialog {
             inputPanel.add(label);
             inputPanel.add(nameFields[i]);
         }
+
+        //The fields are below the title
         gbc.insets = new Insets(20,10,20,10);
         this.backgroundImage.add(inputPanel,gbc);
 
+        //Create start button
         JButton startButton = new JButton("Start Game");
         startButton.setPreferredSize(new Dimension(200,40));
         startButton.addActionListener(e->handleStartButton());
         gbc.insets = new Insets(10,10,50,10);
         this.backgroundImage.add(startButton,gbc);
 
-        //inputPanel.setFocusable(false);
-        //startButton.setFocusable(false);
         this.setSize(800,600);
-        //this.backgroundImage.add(inputPanel, BorderLayout.CENTER);
-        //this.backgroundImage.add(startButton, BorderLayout.SOUTH);
-        //this.add(backgroundImage);
         setLocationRelativeTo(null);
     }
 

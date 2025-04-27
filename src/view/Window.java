@@ -29,114 +29,68 @@ public class Window {
     private ArrayList<Player> players;
     private JScrollPane scrollPane;
     private JTextArea playerLog;
-
-
     private backgroundImage background;
 
 
     protected Window(island plateau, ArrayList<Player> players) {
-
         this.frame = new JFrame("ILE INTERDITE");
         this.frame.setSize(1920, 1080);
         this.frame.setLayout(new BorderLayout());
         this.background = new backgroundImage();
 
-
-
-        // 1. Main background panel
-        //JPanel mainPanel = new JPanel(new BorderLayout());
-       // mainPanel.setBackground(new Color(135, 206, 235)); // Solid background
+        //Create a box where this.grid and gameSettings will be layered.
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(135,206,235));
-
-        // 2. Add grid first
-        //this.grid = new Grid(plateau, players);
-        //grid.setOpaque(false);
-        //mainPanel.add(grid, BorderLayout.CENTER);
 
         this.grid = new Grid(plateau, players);
         this.grid.setOpaque(false);
         mainPanel.add(this.grid, BorderLayout.CENTER);
-        /*Now grid occupies the whole main panel*/
 
-        // 3. Create overlay panel for UI elements
-        //JPanel uiOverlay = new JPanel(new BorderLayout());
-        //uiOverlay.setOpaque(false);
+        //The box containing gameSettings and all its components
         JPanel uiOverlay = new JPanel(new BorderLayout());
         uiOverlay.setOpaque(false);
 
-        // 4. Add your gameSettings panel to overlay
-        //JPanel gameSettings = createGameSettingsPanel(players);
-        //uiOverlay.add(gameSettings, BorderLayout.EAST);
         JPanel gameSettings = createGameSettingsPanel(players);
         uiOverlay.add(gameSettings, BorderLayout.EAST);
-        /*Here we make another box containing our gameSetting on the right*/
 
-        // 5. We layer the the box containing gamesetting and the box that represents grid in mainPanel
-        //What this does is that grid and overlay are on top of each other
-        //But since the gamesetting on the right in overlay it gives an illusion that it is on the right
-        //of grid
-
-        //mainPanel.add(uiOverlay, BorderLayout.CENTER);
-        //frame.add(mainPanel);
         mainPanel.add(uiOverlay, BorderLayout.CENTER);
         frame.add(mainPanel);
 
-        //this.buttons = new Buttons(plateau,this.grid);
+        //The buttons on top
         this.buttons = new Buttons(plateau, this.grid);
         this.buttons.setOpaque(false);
-        // Add buttons at the top
-        //gameSettings.add(buttons, BorderLayout.NORTH);
+
         gameSettings.add(buttons, BorderLayout.NORTH);
 
-        // Player info panel
-        //JPanel playerInfoContainer = new JPanel();
-        //playerInfoContainer.setLayout(new BoxLayout(playerInfoContainer, BoxLayout.Y_AXIS));
-        //playerInfoContainer.setOpaque(false);
+
         JPanel playerInfoContainer = new JPanel();
         playerInfoContainer.setLayout(new BoxLayout(playerInfoContainer, BoxLayout.Y_AXIS));
         playerInfoContainer.setOpaque(false);
 
-        //for (Player player : players) {
-           // playerInfoContainer.add(createPlayerPanel(player));
-           // playerInfoContainer.add(Box.createVerticalStrut(10));
-        //}
         for(Player player : players){
             playerInfoContainer.add(createPlayerPanel(player));
             playerInfoContainer.add(Box.createVerticalStrut(10));
         }
 
-        // Add player info with scroll
-        //JScrollPane playerScroll = new JScrollPane(playerInfoContainer);
-        //playerScroll.setBorder(BorderFactory.createTitledBorder("Player Status"));
-        //playerScroll.setOpaque(false);
-        //playerScroll.getViewport().setOpaque(false);
-        //gameSettings.add(playerScroll, BorderLayout.CENTER);
-
+        //this is where we see player info. They are all contained in their own box represented by playerInfoContainer above
         JScrollPane playerScroll = new JScrollPane(playerInfoContainer);
         playerScroll.setBorder(BorderFactory.createTitledBorder("Player status"));
         playerScroll.setOpaque(false);
         playerScroll.getViewport().setOpaque(false);
         gameSettings.add(playerScroll, BorderLayout.CENTER);
 
-        // Add game log at bottom
-        //playerLog = new JTextArea();
-        //playerLog.setEditable(false);
-        //JScrollPane logScroll = new JScrollPane(playerLog);
-        //logScroll.setBorder(BorderFactory.createTitledBorder("Game Log"));
-        //logScroll.setPreferredSize(new Dimension(900, 300));
-        //gameSettings.add(logScroll, BorderLayout.SOUTH);
-
+        //This is where the game log will be appaeaar
         this.playerLog = new JTextArea();
-        this.playerLog.setEditable(false);
         this.playerLog.setBackground(new Color(151,255,193));
         this.playerLog.setText("Welcome to the forbidden island. Your goal is to pick all the artefacts and reach the helicopter together before the whole island disappears");
+
+        //this makes the game log scrollable
         JScrollPane logScroll = new JScrollPane(this.playerLog);
         logScroll.setBorder(BorderFactory.createTitledBorder("Game Log"));
         logScroll.setPreferredSize(new Dimension(900,300));
         gameSettings.add(logScroll, BorderLayout.SOUTH);
 
-        // Add components to background
+        //We add everything in the background and the background will be added in the window later
         background.add(grid, BorderLayout.WEST);
         background.add(gameSettings, BorderLayout.EAST);
         this.frame.add(background);
@@ -147,10 +101,7 @@ public class Window {
         //Creating a background music
         playBackgroundMusic();
 
-
-        //Creating  a gameLog where information can be updated about the player
-
-
+        //We use that to make sure that the grid has the focus all the time
         grid.requestFocusInWindow();
 
 
@@ -164,33 +115,7 @@ public class Window {
         gameSettings.setOpaque(false);
         return gameSettings;
     }
-    /*private JPanel createPlayerPanel(Player player) {
-        JPanel panel = new JPanel(new GridLayout(0, 2, 10, 5));
-        panel.setBorder(BorderFactory.createEtchedBorder());
-        panel.setMaximumSize(new Dimension(880, 80));
-        panel.setOpaque(false);
 
-        // Create text fields for each player attribute
-        JTextField nameField = createTextField(player.getName());
-        textfieldNames.add(nameField);
-
-        JTextField keyField = createTextField(String.valueOf(player.getPlayerKey()));
-        textfieldKeys.add(keyField);
-
-        JTextField actionField = createTextField(String.valueOf(player.getActionsRemaining()));
-        textFieldActions.add(actionField);
-
-        JTextField artefactField = createTextField(String.valueOf(player.getCountArteFacts()));
-        textfieldArtefacts.add(artefactField);
-
-        // Add fields to the panel with labels
-        addLabelField(panel, "Player:", nameField);
-        addLabelField(panel, "Keys:", keyField);
-        addLabelField(panel, "Actions:", actionField);
-        addLabelField(panel, "Artefacts:", artefactField);
-
-        return panel;
-    }*/
     private JPanel createPlayerPanel(Player player){
         JPanel panel = new JPanel(new GridLayout(0,2,10,5));
         panel.setBorder(BorderFactory.createEtchedBorder());
@@ -218,22 +143,6 @@ public class Window {
 
     }
 
-    /*private JTextField createTextField(String value) {
-        JTextField textField = new JTextField(value);
-        textField.setEditable(false);
-        textField.setBorder(null);
-        textField.setOpaque(false);
-        textField.setForeground(Color.YELLOW);
-        return textField;
-    }
-
-    private void addLabelField(JPanel panel, String label, JTextField textField) {
-        JLabel jLabel = new JLabel(label);
-        jLabel.setForeground(Color.WHITE);
-        panel.add(jLabel);
-        panel.add(textField);
-    }*/
-
     private JTextField createTextField(String value){
         JTextField textField = new JTextField(value);
         textField.setEditable(false);
@@ -254,58 +163,16 @@ public class Window {
 
 
 
-    public void setFrame(JFrame frame) {
-        this.frame = frame;
-    }
+
 
     public Grid getGrid() {
         return grid;
     }
 
-    public void setGrid(Grid grid) {
-        this.grid = grid;
-    }
 
     public Buttons getButtons() {
         return buttons;
     }
-
-    public void setButtons(Buttons buttons) {
-        this.buttons = buttons;
-    }
-
-    public JLabel getLabelName() {
-        return labelName;
-    }
-
-    public void setLabelName(JLabel labelName) {
-        this.labelName = labelName;
-    }
-
-    public JLabel getLabelKey() {
-        return labelKey;
-    }
-
-    public void setLabelKey(JLabel labelKey) {
-        this.labelKey = labelKey;
-    }
-
-    public JLabel getLabelRemainActions() {
-        return labelRemainActions;
-    }
-
-    public void setLabelRemainActions(JLabel labelRemainActions) {
-        this.labelRemainActions = labelRemainActions;
-    }
-
-    public JLabel getLabelArtefacts() {
-        return labelArtefacts;
-    }
-
-    public void setLabelArtefacts(JLabel labelArtefacts) {
-        this.labelArtefacts = labelArtefacts;
-    }
-
     public ArrayList<JTextField> getTextFieldActions() {
         return textFieldActions;
     }
@@ -321,20 +188,12 @@ public class Window {
     public ArrayList<JTextField> getTextfieldArtefacts() {
         return textfieldArtefacts;
     }
-
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
     public JTextArea getPlayerLog() {
         return playerLog;
     }
 
-    public void setPlayerLog(JTextArea playerLog) {
-        this.playerLog = playerLog;
-    }
-
     public void playBackgroundMusic() {
+        //The new thread is used to make sure it runs at the same as the game
         new Thread(() -> {
             try {
                 File musicFile = new File("src/view/Mystery-Bazaar.wav");

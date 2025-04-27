@@ -13,7 +13,6 @@ public class control implements ActionListener, KeyListener, DocumentListener {
     public island mod;
     private ArrayList<Player> listPlayers;
     private  int currentPlayerIndex = 0;
-
     private view.Window window;
     private boolean gameOver = false;
 
@@ -25,26 +24,22 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
     public control(island mod){
         this.mod = mod;
-
-
     }
     public control(island mod, ArrayList<Player>player){
         this(mod);
         this.listPlayers = player;
     }
-
     public void setWindow(view.Window window){
         this.window = window;
     }
 
-
     public void handleButton(ActionEvent e, Player currentPlayer){
-        if(e.getSource() == window.getButtons().getFinDeTour()){
+        if(e.getSource() == window.getButtons().getFinDeTour()){ // If the button selected is <<fin de tour>>
             handleFindeDeTour(currentPlayer);
-        } else if (e.getSource() == window.getButtons().getPartyWon()){
+        } else if (e.getSource() == window.getButtons().getPartyWon()){ //If the button selected is <<party won>>
             handlePartyWon(currentPlayer);
 
-        } else if( e.getSource() == window.getButtons().getKeyExchange()){
+        } else if( e.getSource() == window.getButtons().getKeyExchange()){ //If the button selected is <<end>>
             handleKeyExcahnge(currentPlayer);
         }
     }
@@ -70,8 +65,6 @@ public class control implements ActionListener, KeyListener, DocumentListener {
                 updatePartyButton();
                 return;
             }
-            //System.out.println("Current coordinates of player " + currentPlayerIndex + " (" + currentPlayer.getX() + currentPlayer.getY() + ")");
-            //System.out.println("Button presseed!");
             if (currentPlayer.getActionsRemaining() > 0) {
                 this.mod.actionButtonFinDeTour(currentPlayer);
 
@@ -111,19 +104,13 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
     public void actionPerformed(ActionEvent e) {
         if(gameOver) return;
-
-        /*System.out.println("Before List size: " + this.listPlayers.size());*/
         if (this.listPlayers.size() == 0) return; // Ensure there are players
         Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
-
-        /*System.out.println("Value index: " + currentPlayerIndex);*/
         if (mod.lostHelicop()) {
-           // System.out.println("Button Pressed");
             updatePartyButton();
             return;
         }
         handleButton(e,currentPlayer);
-
 
     }
 
@@ -134,18 +121,17 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //System.out.println("Key pressed");
+
         if(gameOver) return;
         if (this.listPlayers.isEmpty()) return; // Ensure there are players
         Player currentPlayer = this.listPlayers.get(currentPlayerIndex);
-        //System.out.println("Value index: " + currentPlayerIndex);
         window.getPlayerLog().setText(currentPlayer.getName() + " is moving...");
 
-        if (mod.lostHelicop()) {
+        if (mod.lostHelicop()) { //If the helicopter is sunk
             updatePartyButton();
             return;
         }
-        if(this.mod.isDead(currentPlayer)){
+        if(this.mod.isDead(currentPlayer)){ //If a player is dead
             currentPlayer.setPlayerDead(true);
             currentPlayer.setActionsRemaining(0);
             currentPlayer.setPlayerKey(0);
@@ -155,13 +141,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
             return;
         }
 
-
-        /*if (currentPlayer.isPlayerDead()) {
-            System.out.println("Dead player skipped");
-            switchToNextPlayerNotOnHelicopter();
-            return;
-        }*/
-        if (this.mod.ifPlayerOnHelicop(currentPlayer)) {
+        if (this.mod.ifPlayerOnHelicop(currentPlayer)) { //if a player is on the helicopter
             currentPlayer.setOnHelicopter(true);
             currentPlayer.setActionsRemaining(0);
             currentPlayer.setPlayerKey(0);
@@ -176,25 +156,23 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
         if (currentPlayer.getActionsRemaining() > 0) {
             int keyCode = e.getKeyCode();
-
-            // Handle key presses based on direction
             switch (keyCode) {
-                case KeyEvent.VK_UP:
+                case KeyEvent.VK_UP: // If the player got up to another cell
                     currentPlayer.deplacement(Direction.direction.FRONT);
                     currentPlayer.decrementActions();
                     updatePlayerInfo(currentPlayer);
                     break;
-                case KeyEvent.VK_DOWN:
+                case KeyEvent.VK_DOWN: //I the player goes down to another cell
                     currentPlayer.deplacement(Direction.direction.BACK);
                     currentPlayer.decrementActions();
                     updatePlayerInfo(currentPlayer);
                     break;
-                case KeyEvent.VK_LEFT:
+                case KeyEvent.VK_LEFT: //If the player goes left to another cell
                     currentPlayer.deplacement(Direction.direction.LEFT);
                     currentPlayer.decrementActions();
                     updatePlayerInfo(currentPlayer);
                     break;
-                case KeyEvent.VK_RIGHT:
+                case KeyEvent.VK_RIGHT: //If the player goes right to another cell
                     currentPlayer.deplacement(Direction.direction.RIGHT);
                     currentPlayer.decrementActions();
                     updatePlayerInfo(currentPlayer);
@@ -236,16 +214,10 @@ public class control implements ActionListener, KeyListener, DocumentListener {
                     window.getPlayerLog().setText(currentPlayer.getName() + " picked an artefact.");
 
             }
-           // currentPlayer.decrementActions();
-            //System.out.println("Current coordinate: " + currentPlayer.getX() + ", " + currentPlayer.getY());
             if (currentPlayer.getActionsRemaining() == 0) {
                 this.mod.init();
-
-                //window.getPlayerLog().setText("Some areas are slowly disappearing");
                 currentPlayer.resetAction();
-
                 switchToNextPlayerNotOnHelicopter();
-
             }
 
         }
@@ -319,6 +291,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
     }
 
     private void updatePlayerInfo(Player player) {
+        /*Here we are updating the player info which are the name, keys, actions and artefact number*/
         window.getTextfieldNames().get(this.listPlayers.indexOf(player)).setText(player.getName());
         window.getTextfieldKeys().get(this.listPlayers.indexOf(player)).setText(String.valueOf(player.getPlayerKey()));
 
@@ -341,6 +314,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
 
 
     private void switchToNextPlayerNotOnHelicopter() {
+
         int attempts = 0; // Just to prevent infinite loop
         do {
             currentPlayerIndex = (currentPlayerIndex + 1) % listPlayers.size();
@@ -352,7 +326,7 @@ public class control implements ActionListener, KeyListener, DocumentListener {
         Player nextPlayer = listPlayers.get(currentPlayerIndex);
         updatePlayerInfo(nextPlayer);
         window.getPlayerLog().setText(nextPlayer.getName() + ", it is your turn");
-        System.out.println("Switched to player: " + currentPlayerIndex);
+        //System.out.println("Switched to player: " + currentPlayerIndex);
     }
 
 
