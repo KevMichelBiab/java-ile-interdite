@@ -207,7 +207,7 @@ public class island extends Observable{
 
     public void assechement(Direction.direction whereToGo, Player p){
         switch (whereToGo) {
-            case Direction.direction.FRONT:
+            case FRONT:
                 if(p.isInBounds()) {
                     if (this.grid[p.getX()-1][p.getY()].getState() == ZoneState.FLOODED) {
                         System.out.println("Coordinates after updating: " + p.getX() + ", " + p.getY());
@@ -215,7 +215,7 @@ public class island extends Observable{
                     }
                 }
                 break;
-            case Direction.direction.BACK:
+            case BACK:
                 if(p.isInBounds()) {
                     if (this.grid[p.getX()+1][p.getY()].getState() == ZoneState.FLOODED) {
                         System.out.println("Coordinates after updating: " + p.getX() + ", " +p.getY());
@@ -224,7 +224,7 @@ public class island extends Observable{
                 }
                 break;
 
-            case Direction.direction.RIGHT:
+            case RIGHT:
                 if(p.isInBounds()) {
                     if (this.grid[p.getX()][p.getY()+1].getState() == ZoneState.FLOODED) {
                         System.out.println("Coordinates after updating: " + p.getX() +", " + p.getY());
@@ -233,7 +233,7 @@ public class island extends Observable{
                 }
                 break;
 
-            case Direction.direction.LEFT:
+            case LEFT:
                 if(p.isInBounds()) {
                     if (this.grid[p.getX()][p.getY()-1].getState() == ZoneState.FLOODED) {
                         System.out.println("Coordinates after updating: " + p.getX() +", " + p.getY());
@@ -241,7 +241,7 @@ public class island extends Observable{
                     }
                 }
                 break;
-            case Direction.direction.CENTER:
+            case CENTER:
                 if(p.isInBounds()) {
                     if (this.grid[p.getX()][p.getY()].getState() == ZoneState.FLOODED) {
                         this.grid[p.getX()][p.getY()].setState(ZoneState.NORMAL);

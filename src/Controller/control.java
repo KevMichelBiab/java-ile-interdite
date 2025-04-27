@@ -142,14 +142,16 @@ public class control implements ActionListener, KeyListener, DocumentListener {
         }
 
         if (this.mod.ifPlayerOnHelicop(currentPlayer)) { //if a player is on the helicopter
-            currentPlayer.setOnHelicopter(true);
-            currentPlayer.setActionsRemaining(0);
-            currentPlayer.setPlayerKey(0);
-            currentPlayer.setCountArteFacts(0);
-            updatePlayerInfo(currentPlayer);
-            window.getPlayerLog().setText(currentPlayer.getName() + " is on the helicopter zone!");
-            switchToNextPlayerNotOnHelicopter();
-            return;
+            if(this.artefactTotalCount() == 4) {
+                currentPlayer.setOnHelicopter(true);
+                currentPlayer.setActionsRemaining(0);
+                currentPlayer.setPlayerKey(0);
+                currentPlayer.setCountArteFacts(0);
+                updatePlayerInfo(currentPlayer);
+                window.getPlayerLog().setText(currentPlayer.getName() + " is on the helicopter zone!");
+                switchToNextPlayerNotOnHelicopter();
+                return;
+            }
         }
 
 
@@ -328,6 +330,14 @@ public class control implements ActionListener, KeyListener, DocumentListener {
         window.getPlayerLog().setText(nextPlayer.getName() + ", it is your turn");
         //System.out.println("Switched to player: " + currentPlayerIndex);
     }
+    public int artefactTotalCount(){
+        int count = 0;
+        for(Player p: this.listPlayers){
+            count += p.getCountArteFacts();
+        }
+        return count;
+    }
+
 
 
 
