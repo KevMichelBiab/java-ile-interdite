@@ -112,6 +112,7 @@ public class island extends Observable{
                     }
                 }
             }
+            notifyObservers();
        }
 
 
