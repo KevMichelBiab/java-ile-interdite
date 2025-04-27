@@ -181,49 +181,63 @@ public class control implements ActionListener, KeyListener, DocumentListener {
             switch (keyCode) {
                 case KeyEvent.VK_UP:
                     currentPlayer.deplacement(Direction.direction.FRONT);
+                    currentPlayer.decrementActions();
+                    updatePlayerInfo(currentPlayer);
                     break;
                 case KeyEvent.VK_DOWN:
-
                     currentPlayer.deplacement(Direction.direction.BACK);
+                    currentPlayer.decrementActions();
+                    updatePlayerInfo(currentPlayer);
                     break;
                 case KeyEvent.VK_LEFT:
-
                     currentPlayer.deplacement(Direction.direction.LEFT);
+                    currentPlayer.decrementActions();
+                    updatePlayerInfo(currentPlayer);
                     break;
                 case KeyEvent.VK_RIGHT:
-
                     currentPlayer.deplacement(Direction.direction.RIGHT);
+                    currentPlayer.decrementActions();
+                    updatePlayerInfo(currentPlayer);
                     break;
                 case KeyEvent.VK_W:
                     this.mod.assechement(Direction.direction.FRONT,currentPlayer);
                     window.getPlayerLog().setText(currentPlayer.getName() + " just changed the state of the cell above");
+                    currentPlayer.decrementActions();
+                    updatePlayerInfo(currentPlayer);
                     break;
                 case KeyEvent.VK_S:
                     this.mod.assechement(Direction.direction.CENTER,currentPlayer);
                     window.getPlayerLog().setText(currentPlayer.getName() + " just changed the state of the cell he is currently at");
+                    currentPlayer.decrementActions();
+                    updatePlayerInfo(currentPlayer);
                     break;
                 case KeyEvent.VK_A:
                     this.mod.assechement(Direction.direction.LEFT,currentPlayer);
                     window.getPlayerLog().setText(currentPlayer.getName() + " just changed the state of the cell behind");
+                    currentPlayer.decrementActions();
+                    updatePlayerInfo(currentPlayer);
                     break;
                 case KeyEvent.VK_D:
                     this.mod.assechement(Direction.direction.RIGHT,currentPlayer);
                     window.getPlayerLog().setText(currentPlayer.getName() + " just changed the state of the cell in front");
+                    currentPlayer.decrementActions();
+                    updatePlayerInfo(currentPlayer);
                     break;
                 case KeyEvent.VK_Z:
                     this.mod.assechement(Direction.direction.BACK,currentPlayer);
                     window.getPlayerLog().setText(currentPlayer.getName() + " just changed the state of the cell below");
+                    currentPlayer.decrementActions();
+                    updatePlayerInfo(currentPlayer);
                     break;
                 case KeyEvent.VK_ENTER:
                     this.mod.recupArtefacts(currentPlayer);
+                    currentPlayer.decrementActions();
+                    updatePlayerInfo(currentPlayer);
                     window.getPlayerLog().setText(currentPlayer.getName() + " picked an artefact.");
 
             }
-            currentPlayer.decrementActions();
+           // currentPlayer.decrementActions();
             //System.out.println("Current coordinate: " + currentPlayer.getX() + ", " + currentPlayer.getY());
-            updatePlayerInfo(currentPlayer);
-
-
             if (currentPlayer.getActionsRemaining() == 0) {
                 this.mod.init();
 
