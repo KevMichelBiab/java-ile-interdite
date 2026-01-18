@@ -86,6 +86,7 @@ public enum ZoneState {
 }
 ```
 Le phénomène de changer l’état de 3 zones aléatoires à chaque fin de tour est assuré par la méthode de la class island.
+![My Project Screenshot](src/Screenshots/Grille.png)
 
 
 ### La section de droite avec les paramètres de jeu
@@ -107,6 +108,8 @@ Le button PartyWon est déclenché grâce à la méthode updatePartyButton dans 
 La méthode exchangeKeys  permet au joueur actuel de donner sa clé au joueur suivant
 
 Un choix que j’ai fait est que dans l’ensemble du jeu, le joueur actuel est présent dans controlleur en tant qu’attribut. Cela me semblait plus facile à gérer. Tout ce que j’avais à faire était de juste appliquer les méthodes qui m'intéressent sur le jour actuel présent dans la class Control. 
+
+
 
 
 ## Les fonctionnalités ajoutées
@@ -143,7 +146,7 @@ J’ai par la suite tout ajouté à mon backgroundImage pour que les élements s
 
 Ci-dessus une photo final de mon rendu
 
-![My Project Screenshot](src/Screenshots/Grille.png)
+![My Project Screenshot](src/Screenshots/RENDU_FINAL.png)
 
 
 
