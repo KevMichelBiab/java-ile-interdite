@@ -108,7 +108,7 @@ Le button PartyWon est déclenché grâce à la méthode updatePartyButton dans 
 La méthode exchangeKeys  permet au joueur actuel de donner sa clé au joueur suivant
 
 Un choix que j’ai fait est que dans l’ensemble du jeu, le joueur actuel est présent dans controlleur en tant qu’attribut. Cela me semblait plus facile à gérer. Tout ce que j’avais à faire était de juste appliquer les méthodes qui m'intéressent sur le jour actuel présent dans la class Control. 
-
+![My Project Screenshot](src/Screenshots/joeurs_infos_gamelog.png)
 
 
 
@@ -146,7 +146,7 @@ J’ai par la suite tout ajouté à mon backgroundImage pour que les élements s
 
 Ci-dessus une photo final de mon rendu
 
-![My Project Screenshot](src/RENDU_FINAL.png)
+![My Project Screenshot](src/Screenshots/RENDU_FINAL.png)
 
 
 
