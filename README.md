@@ -143,7 +143,7 @@ J’ai par la suite tout ajouté à mon backgroundImage pour que les élements s
 
 Ci-dessus une photo final de mon rendu
 
-![My Project Screenshot](src/RENDU FINAL.png)
+![My Project Screenshot](src/Screenshots/Grille.png)
 
 
 
