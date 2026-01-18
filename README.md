@@ -146,7 +146,7 @@ J’ai par la suite tout ajouté à mon backgroundImage pour que les élements s
 
 Ci-dessus une photo final de mon rendu
 
-![My Project Screenshot](src/Screenshots/RENDU_FINAL.png)
+![My Project Screenshot](src/RENDU_FINAL.png)
 
 
 
