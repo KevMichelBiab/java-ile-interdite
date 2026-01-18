@@ -3,6 +3,18 @@
 ## Description
 Le jeu Île Interdite est un jeu de plateforme dans lequel les joueurs ont pour objectif de récupérer 4 artefacts dispersés sur une île qui disparaît progressivement. La partie est remportée lorsque tous les joueurs ont atteint l'hélicoptère avec les artefacts afin de pouvoir s'échapper, le tout avant que les zones ne disparaissent.
 
+## Technologies
+- Java
+- Architecture MVC
+- Swing (Interface graphique)
+- Programmation orientée objet
+
+## Fonctionnalités principales
+- Gestion de la logique et des états
+- Interface interactive (grille, boutons)
+- Système d'inondation progressive
+- Conditions de victoire et de défaite
+
 ## Les élements du jeu
 Avant de se plonger dans la conception du jeu, il est important de rappeler les éléments importants du jeu.
 Notre île est composée de différentes zones. Elles ont toutes un état spécial.
