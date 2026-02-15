@@ -140,6 +140,8 @@ En ce qui concerne le gamer log, j’ai utilisé un composant plus précisément
 Un écran d’accueil et la possibilité de joueur avec au plus 3 joueurs
 L’écran d’accueil est une nouvelle classe IntroWindow dans lequel je représente le titre du jeu, des zones pour entrer les noms des joueurs et un bouton pour commencer le jeu. Dans le cas où, on n’entre pas noms et qu’on appuie le bouton de démarrage du jeu, un message s’affiche nous disant d’entrer des noms. L’écran d’accueil prend aussi en compte le fait d’ajouter seulement les joueurs dont le nom a été entré dans la fenêtre de jeu
 
+## Lancer le projet
+Lancer la class main qui se trouve dans le dossier view
 
 ## Les problèmes rencontrés
 
